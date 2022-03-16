@@ -6,8 +6,9 @@ class projectService{
         return projects;
     }
 
-    static setProject = async ()=>{
-        let project = await Project.findByID({})
+    static setProject = async ({ id, })=>{
+        let project = await Project.findByID({});
+
     }
 
 }
