@@ -23,6 +23,9 @@ const ProjectSchema = new Schema(
             type: Date,
             require:true,
             
+        },
+        git:{
+            type: String,
         }
     },
     {

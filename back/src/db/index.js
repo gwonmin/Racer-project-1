@@ -15,4 +15,12 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
+db.collection('Azulcoding').insertOne({
+  title: "elice resume webpage",
+  description: "엘리스 AI 트랙 첫 번째 프로젝트",
+  from_date: new Date("2022-03-15"),
+  to_date: new Date("2022-03-26"),
+  git: "https://kdt-gitlab.elice.io/",
+})
+
 export { User };
