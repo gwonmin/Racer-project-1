@@ -5,6 +5,7 @@ import { projectService } from "../services/projectService";
 
 const projectRouter = Router();
 
+// 새로운 프로젝트 만들기
 projectRouter.post("/create", async (req, res, next)=>{
     try{
         if(is.emptyObject(req.body)) {
@@ -14,6 +15,21 @@ projectRouter.post("/create", async (req, res, next)=>{
         }
 
         console.log(req.body);
+        const title = req.body.title;
+        const from_date = req.body.from_date;
+        const to_date = req.body.to_date;
+
+        const newProject = await projectService.addProject({
+            title,
+            from_date,
+            to_date,
+        })
+
+        if(newProject.errorMessage){
+            throw new Error(newProject.errorMessage);
+        }
+
+        res.status(201).json(newProject);
 
     } catch (error) {
         next(error);
