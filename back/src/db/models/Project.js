@@ -6,6 +6,11 @@ class Project{
         return createdNewProject;
     }
 
+    static findById = async ({ project_id }) => {
+        const project = await ProjectModel.findOne({ id: project_id})
+        return project;
+    }
+
     static findAll = async () =>{
         const projects = await ProjectModel.find({});
         return projects;
