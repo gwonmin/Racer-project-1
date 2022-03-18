@@ -6,7 +6,9 @@ import { projectService } from "../services/projectService";
 const projectRouter = Router();
 
 // 새로운 프로젝트 만들기
-projectRouter.post("/project/create", async (req, res, next)=>{
+projectRouter.post(
+    "/project/create", 
+    async (req, res, next) => {
     try{
         if(is.emptyObject(req.body)) {
             throw new Error(
@@ -40,7 +42,7 @@ projectRouter.post("/project/create", async (req, res, next)=>{
 projectRouter.get(
     "/projects", 
     login_required, 
-    async (req, res, next)=>{
+    async (req, res, next) => {
         try {
             const projects = await projectService.getProjects();
             res.status(200).send(projects)
@@ -54,10 +56,10 @@ projectRouter.get(
 projectRouter.put(
     "/projects/:id",
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
       try {
         // URI로부터 사용자 id를 추출함.
-        const user_id = req.params.id;
+        const user_id = req.params.user_id;
 
         // body data 로부터 업데이트할 프로젝트 정보를 추출함.
         const title = req.body.title ?? null;
@@ -81,5 +83,27 @@ projectRouter.put(
       }
     }
   );
+
+  // 프로젝트 삭제
+  projectRouter.delete(
+      "/projects/:id",
+      login_required,
+      async (req, res, next) => {
+          try {
+            const project_id = req.params.id;
+            const deletedProject = await projectService.deleteProject({ project_id });
+
+            if(deletedProject.errorMessage){
+                throw new Error(updatedProject.errorMessage);
+            }
+
+            res.status(200).json(deletedProject);
+            
+          } catch (error) {
+            next(error);
+          }
+      }
+
+  )
 
 export default { projectRouter }

@@ -33,6 +33,11 @@ class Project{
         );
         return updatedProject;
     }
+
+    static delete = async ({ project_id }) => {
+        const deletedProject = await ProjectModel.deleteOne({ id: project_id });
+        return deletedProject;
+    }
 }
 
 export default { Project };

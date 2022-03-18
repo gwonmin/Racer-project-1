@@ -1,4 +1,4 @@
-import Project from "../db";
+import { Project } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class projectService{
@@ -55,18 +55,23 @@ class projectService{
         if (toUpdate.description) {
             const fieldToUpdate = "description";
             const newValue = toUpdate.description;
-            user = await User.update({ user_id, fieldToUpdate, newValue });
+            project = await Project.update({ user_id, fieldToUpdate, newValue });
         }
 
         if (toUpdate.git) {
             const fieldToUpdate = "git";
             const newValue = toUpdate.git;
-            user = await User.update({ user_id, fieldToUpdate, newValue });
+            project = await project.update({ user_id, fieldToUpdate, newValue });
         }
 
         return project;
     }
 
+    // 프로젝트 삭제하기
+    static deleteProject = async ({ project_id }) => {
+        const project = await Project.delete({ project_id })
+        return project;
+    }
 }
 
 export default { projectService };
