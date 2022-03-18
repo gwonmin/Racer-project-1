@@ -1,4 +1,3 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { awardService } from "../services/awardService";
@@ -20,7 +19,7 @@ awardRouter.post("/user/login", async (req, res, next) => {
         res.status(200).send(user);
     } catch (error) {
         next(error);
-    };
+    }
 }); 
 
 awardRouter.post("/award/create", async (req, res, next) => {
@@ -44,3 +43,68 @@ awardRouter.post("/award/create", async (req, res, next) => {
         next(error);
     }
 });
+
+awardRouter.get(
+    "/awards/:id",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const id = req.params.id;
+            const currentAwardInfo = await awardService.getAward({ id });
+
+            if (currentAwardInfo.errorMessage) {
+                throw new Error(currentAwardInfo.errorMessage);
+            };
+
+            res.status(200).send(currentAwardInfo);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+awardRouter.put(
+    "/awards/:id",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const id = req.params.id;
+            const title = req.body.title;
+            const description = req.body.description;
+            const whenDate = req.body.whenDate;
+
+            const toUpdate = { title, description, whenDate };
+
+            const updatedAward = await awardService.setAwards({ id, toUpdate });
+
+            if (updatedAward.errorMessage) {
+                throw new Error(updatedAward.errorMessage);
+            };
+
+            res.status(200).json(updatedAward);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+awardRouter.get(
+    "/awardlist/:user_id",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const user_id =req.params.user_id;
+            const currentAwardsInfo = await awardService.getAwardInfo({ user_id });
+
+            if (currentAwardsInfo.errorMessage) {
+                throw new Error(currentAwardsInfo.errorMessage);
+            };
+
+            res.status(200).json(currentAwardsInfo);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+export { awardRouter };

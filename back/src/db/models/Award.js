@@ -6,13 +6,13 @@ class Award {
         return createdNewAward;
     };
 
-    static async findById({ award_id }) {
-        const award = await AwardModel.findOne({ id: award_id });
+    static async findById({ id }) {
+        const award = await AwardModel.findOne({ id });
         return award;
     };
 
     static async findByUserId({ user_id }) {
-        const award = await AwardModel.findOne({ id: user_id });
+        const award = await AwardModel.find({ user_id });
         return award;
     };
 
@@ -21,8 +21,8 @@ class Award {
         return awards;
     };
 
-    static async update({ user_id, fieldToUpdate, newValue }) {
-        const filter = { id: award_id };
+    static async update({ id, fieldToUpdate, newValue }) {
+        const filter = { id };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
 

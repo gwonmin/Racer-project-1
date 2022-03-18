@@ -1,8 +1,8 @@
 import Award from "../db";
 
 class awardService {
-    static addAward = async ({ user_id, title, description, whenDate }) => {
-        const newAward = { user_id, title, description, whenDate };
+    static addAward = async ({ title, description, whenDate }) => {
+        const newAward = { title, description, whenDate };
         
         const createdNewAward = await Award.create({ newAward });
         createdNewAward.errorMessage = null;
@@ -10,8 +10,8 @@ class awardService {
         return createdNewAward;
     };
 
-    static getAward = async ({ award_id }) => {
-        const award = await Award.findById({ award_id });
+    static getAward = async ({ id }) => {
+        const award = await Award.findById({ id });
 
         const title = award.title;
         const description = award.description;
@@ -27,13 +27,8 @@ class awardService {
         return award;
     };
 
-    static getAwards = async () => {
-        const awards = await Award.findAll();
-        return awards;
-    };
-
-    static setAwards = async ({ award_id, toUpdate }) => {
-        let award = await Award.findById({ award_id });
+    static setAwards = async ({ id, toUpdate }) => {
+        let award = await Award.findById({ id });
 
         if (!award) {
             const errorMessage =
@@ -44,13 +39,13 @@ class awardService {
         if (toUpdate.title) {
             const fieldToUpdate = "title";
             const newValue = toUpdate.title;
-            award = await Award.update({ award_id, fieldToUpdate, newValue });
+            award = await Award.update({ id, fieldToUpdate, newValue });
         };
 
         if (toUpdate.description) {
             const fieldToUpdate = "description";
             const newValue = toUpdate.description;
-            award = await Award.update({ award_id, fieldToUpdate, newValue });
+            award = await Award.update({ id, fieldToUpdate, newValue });
         };
 
         if (toUpdate.whenDate) {
@@ -63,7 +58,7 @@ class awardService {
     };
 
     static getAwardInfo({ user_id }) {
-        const award = await Award.findById({ award_id });
+        const award = await Award.findByUserId({ user_id });
 
         if (!award) {
             const errorMessage =
