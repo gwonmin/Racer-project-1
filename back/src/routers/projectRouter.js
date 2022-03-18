@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { is } from "express/lib/request";
+import is from "@sindresorhus/is";
 import { login_required } from "../middlewares/login_required";
 import { projectService } from "../services/projectService";
 
@@ -8,6 +8,7 @@ const projectRouter = Router();
 // 새로운 프로젝트 만들기
 projectRouter.post(
     "/project/create", 
+    login_required,
     async (req, res, next) => {
     try{
         if(is.emptyObject(req.body)) {
@@ -98,7 +99,7 @@ projectRouter.put(
             }
 
             res.status(200).json(deletedProject);
-            
+
           } catch (error) {
             next(error);
           }
@@ -106,4 +107,4 @@ projectRouter.put(
 
   )
 
-export default { projectRouter }
+export { projectRouter }
