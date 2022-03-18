@@ -2,10 +2,6 @@ import { Schema, model } from "mongoose";
 
 const ProjectSchema = new Schema(
     {
-        id:{
-            type: String,
-            required: true,
-        },
         user_id:{
           type: String,
           required: true,
@@ -20,11 +16,11 @@ const ProjectSchema = new Schema(
             default: "설명이 아직 없습니다. 추가해 주세요.",
         },
         from_date:{
-            type: Date,
+            type: String,
             required: true,
         },
         to_date:{
-            type: Date,
+            type: String,
             require:true,
             
         },
@@ -41,4 +37,4 @@ const ProjectSchema = new Schema(
 
 const ProjectModel = model("Project", ProjectSchema);
 
-export default {ProjectModel};
+export { ProjectModel };

@@ -1,4 +1,4 @@
-import ProjectModel from "../schemas/project"
+import { ProjectModel } from "../schemas/project"
 
 class Project{
     static create = async ({ newProject }) =>{
@@ -40,4 +40,4 @@ class Project{
     }
 }
 
-export default { Project };
+export { Project };
