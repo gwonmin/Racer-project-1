@@ -65,7 +65,7 @@ function Education({ portfolioOwnerId, isEditable }) {
             </div>))
         }
         <Col>
-            {!isEditable && (
+            {isEditable && (
                 <Row className="mt-3">
                     <Col className="text-center mb-3">
                         <Button

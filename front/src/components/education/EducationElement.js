@@ -6,7 +6,7 @@ function EducationElement({education, isEditable, editingList, setEditingList}) 
         <Col>{education?.school}</Col>
         <Row>
             <Col className="mb-2 text-muted">{`${education?.major} (${education?.position})`}</Col>
-            {!isEditable && (
+            {isEditable && (
                 <Col>
                     <Row className="mt-3 text-center text-info">
                         <Col sm={{ span: 20 }}>
