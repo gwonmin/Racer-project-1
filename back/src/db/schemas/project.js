@@ -30,6 +30,8 @@ const ProjectSchema = new Schema(
         },
         git:{
             type: String,
+            required: false,
+            default: "https://github.com",
         }
     },
     {
