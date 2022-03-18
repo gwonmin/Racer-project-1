@@ -2,25 +2,69 @@ import Project from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class projectService{
-    static addProject = async ({ title, from_date, to_date })=>{
+    // 프로젝트 추가하기
+    static addProject = async ({ title, from_date, to_date, git }) => {
         const id = uuidv4();
         const newProject = { id, title, from_date, to_date };
 
         const createdNewProject = await Project.create({ newProject });
-        createdNewProject.errorMessage = Null;
+        createdNewProject.errorMessage = null;
 
         return createdNewProject;
-
     }
 
-    static getProjects = async () =>{
+    // 프로젝트 가져오기
+    static getProject = async ({ user_id }) => {
+        const projects = await Project.findByUserId({ user_id });
+        return projects;
+    }
+
+    static getProjectList = async() => {
         const projects = await Project.findAll();
         return projects;
     }
 
-    static setProject = async ({ id, })=>{
-        let project = await Project.findByID({});
+    // 프로젝트 수정하기
+    static setProject = async ({ user_id, toUpdate }) => {
+        let project = await Project.findByID({ user_id });
 
+        if(!project){
+            const errorMessage =
+                "프로젝트를 찾을 수 없습니다.";
+            return { errorMessage };
+        }
+
+        if(toUpdate.title){
+            const fieldToUpdate = "title";
+            const newValue = toUpdate.title;
+            project = await Project.update({ user_id, fieldToUpdate, newValue })
+        }
+
+        if(toUpdate.from_date){
+            const fieldToUpdate = "from_date";
+            const newValue = toUpdate.from_date;
+            project = await Project.update({ user_id, fieldToUpdate, newValue })
+        }
+
+        if(toUpdate.to_date){
+            const fieldToUpdate = "to_date";
+            const newValue = toUpdate.to_date;
+            project = await Project.update({ user_id, fieldToUpdate, newValue })
+        }
+
+        if (toUpdate.description) {
+            const fieldToUpdate = "description";
+            const newValue = toUpdate.description;
+            user = await User.update({ user_id, fieldToUpdate, newValue });
+        }
+
+        if (toUpdate.git) {
+            const fieldToUpdate = "git";
+            const newValue = toUpdate.git;
+            user = await User.update({ user_id, fieldToUpdate, newValue });
+        }
+
+        return project;
     }
 
 }
