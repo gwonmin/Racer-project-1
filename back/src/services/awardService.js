@@ -1,8 +1,8 @@
 import { Award } from "../db";
 
 class awardService {
-    static addAward = async ({ title, description, whenDate }) => {
-        const newAward = { title, description, whenDate };
+    static addAward = async ({ user_id, title, description, whenDate }) => {
+        const newAward = { user_id, title, description, whenDate };
         
         const createdNewAward = await Award.create({ newAward });
         createdNewAward.errorMessage = null;
@@ -10,8 +10,8 @@ class awardService {
         return createdNewAward;
     };
 
-    static getAward = async ({ id }) => {
-        const award = await Award.findById({ id });
+    static getAward = async ({ _id }) => {
+        const award = await Award.findById({ _id });
 
         const title = award.title;
         const description = award.description;
@@ -27,8 +27,8 @@ class awardService {
         return clickedAward;
     };
 
-    static setAwards = async ({ id, toUpdate }) => {
-        let award = await Award.findById({ id });
+    static setAwards = async ({ _id, toUpdate }) => {
+        let award = await Award.findById({ _id });
 
         if (!award) {
             const errorMessage =

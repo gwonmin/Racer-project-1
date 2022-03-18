@@ -24,11 +24,13 @@ awardRouter.post("/user/login", async (req, res, next) => {
 
 awardRouter.post("/award/create", async (req, res, next) => {
     try {
+        const user_id = req.body.user_id;
         const title = req.body.title;
         const description = req.body.description;
         const whenDate = req.body.whenDate;
 
         const newAward = await awardService.addAward({
+            user_id,
             title,
             description,
             whenDate,
@@ -50,7 +52,7 @@ awardRouter.get(
     async (req, res, next) => {
         try {
             const id = req.params.id;
-            const currentAwardInfo = await awardService.getAward({ id });
+            const currentAwardInfo = await awardService.getAward({ _id });
 
             if (currentAwardInfo.errorMessage) {
                 throw new Error(currentAwardInfo.errorMessage);
@@ -75,7 +77,7 @@ awardRouter.put(
 
             const toUpdate = { title, description, whenDate };
 
-            const updatedAward = await awardService.setAwards({ id, toUpdate });
+            const updatedAward = await awardService.setAwards({ _id, toUpdate });
 
             if (updatedAward.errorMessage) {
                 throw new Error(updatedAward.errorMessage);
