@@ -6,6 +6,11 @@ class Project{
         return createdNewProject;
     }
 
+    static findByUserId = async ({ user_id }) =>{  
+        const project = await ProjectModel.find({ user_id });
+        return project;
+    }
+
     static findById = async ({ project_id }) => {
         const project = await ProjectModel.findOne({ id: project_id})
         return project;
@@ -26,6 +31,7 @@ class Project{
             update,
             option,
         );
+        return updatedProject;
     }
 }
 
