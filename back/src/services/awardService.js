@@ -1,4 +1,4 @@
-import Award from "../db";
+import { Award } from "../db";
 
 class awardService {
     static addAward = async ({ title, description, whenDate }) => {
@@ -24,7 +24,7 @@ class awardService {
             errorMessage: null,
         };
 
-        return award;
+        return clickedAward;
     };
 
     static setAwards = async ({ id, toUpdate }) => {
@@ -57,7 +57,7 @@ class awardService {
         return award;
     };
 
-    static getAwardInfo({ user_id }) {
+    static getAwardInfo = async ({ user_id }) => {
         const award = await Award.findByUserId({ user_id });
 
         if (!award) {
