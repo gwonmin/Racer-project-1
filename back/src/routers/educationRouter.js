@@ -8,7 +8,7 @@ const educationRouter = Router();
 educationRouter.post(
     "/education/create",
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
         try {
             //토큰으로 사용자 id 불러오기
             const user_id = req.currentUserId
@@ -46,7 +46,7 @@ educationRouter.post(
 educationRouter.get(
     '/educations/:id',
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
         try {
             const _id = req.params.id;
             const Education = await educationService.getEducation({ _id });
@@ -61,7 +61,7 @@ educationRouter.get(
 educationRouter.put(
     '/educations/:id',
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
         try {
             // URI로부터 id를 추출함.
             const _id = req.params.id;
@@ -90,7 +90,7 @@ educationRouter.put(
 educationRouter.delete(
     '/educations/:id',
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
         try {
             const result = await educationService.removeEducation({ _id: req.params.id });
             res.json(result);
@@ -103,7 +103,7 @@ educationRouter.delete(
 educationRouter.get(
     '/educationlist/:user_id',
     login_required,
-    async function (req, res, next) {
+    async (req, res, next) => {
         try {
             // URI로부터 user_id를 추출함.
             const user_id = req.params.user_id;

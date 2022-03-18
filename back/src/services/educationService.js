@@ -1,6 +1,6 @@
 import { Education } from '../db'
 class educationService {
-    static async addEducation({ user_id, school, major, position }) {
+    static addEducation = async ({ user_id, school, major, position }) => {
         const newEducation = { user_id, school, major, position };
         
         const createdNewEducation = await Education.create({ newEducation });
@@ -9,12 +9,12 @@ class educationService {
         return createdNewEducation;
     };
 
-    static async getEducations({ user_id }) {
+    static getEducations = async ({ user_id }) => {
         const educations = await Education.findByUserId({ user_id });
         return educations;
     }
 
-    static async getEducation({ _id }) {
+    static getEducation = async ({ _id }) => {
         const education = await Education.findById({ _id });
         
         // db에 없는 경우, 에러 메시지 반환
@@ -35,7 +35,7 @@ class educationService {
         return clickedEducation
     };
 
-    static async setEducation({ _id, toUpdate }) {
+    static setEducation = async ({ _id, toUpdate }) => {
         //우선 해당 id의 학력이 db에 존재하는지 확인
         let education = await Education.findById({ _id });
 
@@ -63,7 +63,7 @@ class educationService {
         return education;
     };
 
-    static async removeEducation({ _id }) {
+    static removeEducation = async ({ _id }) => {
         const result = await Education.remove({ _id });
         return result;
     }
