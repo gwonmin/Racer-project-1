@@ -5,6 +5,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+import Education from "./education/Education"
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -18,13 +19,21 @@ function Portfolio() {
 
   const fetchPorfolioOwner = async (ownerId) => {
     // 유저 id를 가지고 "/users/유저id" 엔드포인트로 요청해 사용자 정보를 불러옴.
-    const res = await Api.get("users", ownerId);
-    // 사용자 정보는 response의 data임.
-    const ownerData = res.data;
-    // portfolioOwner을 해당 사용자 정보로 세팅함.
-    setPortfolioOwner(ownerData);
-    // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
-    setIsFetchCompleted(true);
+    try {
+      const res = await Api.get("users", ownerId);
+      // 사용자 정보는 response의 data임.
+      const ownerData = res.data;
+      // portfolioOwner을 해당 사용자 정보로 세팅함.
+      setPortfolioOwner(ownerData);
+      // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
+      setIsFetchCompleted(true);
+    } catch (err) {
+      //백엔드와 연결 전에 로딩을 위해 임시 유닛을 개설합니다.
+      console.log("포트폴리오 불러오기에 실패하였습니다.\n", err);
+      const ownerData="임시유저의 데이터입니다.";
+      setPortfolioOwner(ownerData);
+      setIsFetchCompleted(true);
+    }
   };
 
   useEffect(() => {
@@ -61,11 +70,10 @@ function Portfolio() {
           />
         </Col>
         <Col>
-
-          <div style={{ textAlign: "center" }}>
-            학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
-          </div>
-
+          <Education 
+               portfolioOwnerId={portfolioOwner.id}
+               isEditable={portfolioOwner.id === userState.user?.id}
+          />
         </Col>
       </Row>
     </Container>
