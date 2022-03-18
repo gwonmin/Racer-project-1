@@ -69,9 +69,9 @@ class projectService{
 
     // 프로젝트 삭제하기
     static deleteProject = async ({ project_id }) => {
-        const project = await Project.delete({ project_id })
+        const project = await Project.delete({ project_id });
         return project;
     }
 }
 
-export default { projectService };
+export { projectService };
