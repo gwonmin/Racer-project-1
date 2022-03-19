@@ -38,7 +38,7 @@ function Award({ portfolioOwnerId, isEditable }) {
     <>
         <Card className="mb-2 ms-3 mr-5">
         <Card.Body>
-        <Card.Title>학력</Card.Title>
+        <Card.Title>수상이력</Card.Title>
         {
             awardList.map((award) => (<div key={award.user_id}>
                 {
