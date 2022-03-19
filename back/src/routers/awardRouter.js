@@ -5,23 +5,6 @@ import { userAuthService } from "../services/userService";
 
 const awardRouter = Router();
 
-awardRouter.post("/user/login", async (req, res, next) => {
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
-
-        const user = await userAuthService.getUser({ email, password });
-
-        if (user.errorMessage) {
-            throw new Error(user.errorMessage);
-        };
-
-        res.status(200).send(user);
-    } catch (error) {
-        next(error);
-    }
-}); 
-
 awardRouter.post(
     "/award/create",
     login_required,
