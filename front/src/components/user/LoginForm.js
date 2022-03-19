@@ -59,6 +59,22 @@ function LoginForm() {
     }
   };
 
+  const imsyUser = (e) => {
+    e.preventDefault();
+      // 임시유저를 생성하는 함수입니다.
+      const user = {
+        email: "저는 임시유저입니다.",
+        password: "임시 비밀번호",
+      }
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
+
+      // 기본 페이지로 이동함.
+      navigate("/", { replace: true });
+  }
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -101,6 +117,16 @@ function LoginForm() {
                 </Button>
               </Col>
             </Form.Group>
+
+
+            <Form.Group as={Row} className="mt-3 text-center">
+              <Col sm={{ span: 20 }}>
+                <Button variant="success" id="백엔드와 연결 전까지 사용할 임시 유닛입니다." onClick={imsyUser}>
+                  임시 유저 발급하기
+                </Button>
+              </Col>
+            </Form.Group>
+            
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
