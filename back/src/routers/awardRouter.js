@@ -22,36 +22,40 @@ awardRouter.post("/user/login", async (req, res, next) => {
     }
 }); 
 
-awardRouter.post("/award/create", async (req, res, next) => {
-    try {
-        const user_id = req.body.user_id;
-        const title = req.body.title;
-        const description = req.body.description;
-        const whenDate = req.body.whenDate;
+awardRouter.post(
+    "/award/create",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const user_id = req.currentUserId;
+            const title = req.body.title;
+            const description = req.body.description;
+            const whenDate = req.body.whenDate;
 
-        const newAward = await awardService.addAward({
-            user_id,
-            title,
-            description,
-            whenDate,
-        });
+            const newAward = await awardService.addAward({
+                user_id,
+                title,
+                description,
+                whenDate,
+            });
 
-        if (newAward.errorMessage) {
-            throw new Error(newAward.errorMessage);
-        };
+            if (newAward.errorMessage) {
+                throw new Error(newAward.errorMessage);
+            };
 
-        res.status(201).json(newAward);
-    } catch (error) {
-        next(error);
+            res.status(201).json(newAward);
+        } catch (error) {
+            next(error);
+        }
     }
-});
+);
 
 awardRouter.get(
     "/awards/:id",
     login_required,
     async (req, res, next) => {
         try {
-            const id = req.params.id;
+            const _id = req.params.id;
             const currentAwardInfo = await awardService.getAward({ _id });
 
             if (currentAwardInfo.errorMessage) {
@@ -70,7 +74,7 @@ awardRouter.put(
     login_required,
     async (req, res, next) => {
         try {
-            const id = req.params.id;
+            const _id = req.params.id;
             const title = req.body.title;
             const description = req.body.description;
             const whenDate = req.body.whenDate;
@@ -103,6 +107,25 @@ awardRouter.get(
             };
 
             res.status(200).json(currentAwardsInfo);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+awardRouter.delete(
+    "/awards/:id",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const _id = req.params.id;
+            const deleteAwardsInfo = await awardService.deleteAward({ _id });
+
+            if (deleteAwardsInfo.errorMessage) {
+                throw new Error(deleteAwardsInfo.errorMessage);
+            };
+
+            res.status(200).json(deleteAwardsInfo);
         } catch (error) {
             next(error);
         }

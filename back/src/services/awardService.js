@@ -39,19 +39,19 @@ class awardService {
         if (toUpdate.title) {
             const fieldToUpdate = "title";
             const newValue = toUpdate.title;
-            award = await Award.update({ id, fieldToUpdate, newValue });
+            award = await Award.update({ _id, fieldToUpdate, newValue });
         };
 
         if (toUpdate.description) {
             const fieldToUpdate = "description";
             const newValue = toUpdate.description;
-            award = await Award.update({ id, fieldToUpdate, newValue });
+            award = await Award.update({ _id, fieldToUpdate, newValue });
         };
 
         if (toUpdate.whenDate) {
             const fieldToUpdate = "whenDate";
             const newValue = toUpdate.whenDate;
-            award = await Award.update({ award_id, fieldToUpdate, newValue });
+            award = await Award.update({ _id, fieldToUpdate, newValue });
         };
 
         return award;
@@ -68,6 +68,11 @@ class awardService {
 
         return award;
     };
+
+    static deleteAward = async ({ _id }) => {
+        const award = await Award.delete({ _id });
+        return award;
+    }
 };
 
 export { awardService };

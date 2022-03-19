@@ -33,6 +33,11 @@ class Award {
         );
         return updatedAward;
     };
+
+    static async delete({ _id }) {
+        const deletedAward = await AwardModel.deleteOne({ _id });
+        return deletedAward;
+    }
 };
 
 export { Award };
