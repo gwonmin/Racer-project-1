@@ -6,6 +6,7 @@ import { educationRouter } from "./routers/educationRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { projectRouter } from "./routers/projectRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { projectRouter } from "./routers/projectRouter";
 
 const app = express();
 
