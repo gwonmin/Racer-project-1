@@ -45,19 +45,18 @@ projectRouter.post(
     }
 });
 
-// 전체 프로젝트 목록을 얻음
-projectRouter.get(
-    "/projects", 
-    login_required, 
-    async (req, res, next) => {
-        try {
-            const projects = await projectService.getProjectList();
-            res.status(200).send(projects)
-        } catch (error){
-            next(error)
-        }
-    }
-);
+// projectRouter.get(
+//     "/projects", 
+//     login_required, 
+//     async (req, res, next) => {
+//         try {
+//             const projects = await projectService.getProjectList();
+//             res.status(200).send(projects)
+//         } catch (error){
+//             next(error)
+//         }
+//     }
+// );
 
 // 특정 프로젝트 찾기
 projectRouter.get(
@@ -74,6 +73,7 @@ projectRouter.get(
     }
 );
 
+// 전체 프로젝트 얻기
 projectRouter.get(
     "/projectlist/:user_id", 
     login_required, 
