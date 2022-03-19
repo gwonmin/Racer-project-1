@@ -11,8 +11,8 @@ class Project{
         return project;
     }
 
-    static findById = async ({ project_id }) => {
-        const project = await ProjectModel.findOne({ id: project_id})
+    static findByProjectId = async ({ project_id }) => {
+        const project = await ProjectModel.findOne({ _id: project_id })
         return project;
     }
 

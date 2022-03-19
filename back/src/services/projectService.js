@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 
 class projectService{
     // 프로젝트 추가하기
-    static addProject = async ({ title, from_date, to_date, git }) => {
+    static addProject = async ({ user_id, title, from_date, to_date, description, git }) => {
         const id = uuidv4();
-        const newProject = { id, title, from_date, to_date };
+        const newProject = { user_id, title, from_date, to_date, description, git };
 
         const createdNewProject = await Project.create({ newProject });
         createdNewProject.errorMessage = null;
@@ -14,7 +14,12 @@ class projectService{
     }
 
     // 프로젝트 가져오기
-    static getProject = async ({ user_id }) => {
+    static getProjectByProjectID = async ({ project_id }) => {
+        const projects = await Project.findByProjectId({ project_id });
+        return projects;
+    }
+
+    static getProjectByUserID = async ({ user_id }) => {
         const projects = await Project.findByUserId({ user_id });
         return projects;
     }
@@ -26,7 +31,7 @@ class projectService{
 
     // 프로젝트 수정하기
     static setProject = async ({ user_id, toUpdate }) => {
-        let project = await Project.findByID({ user_id });
+        let project = await Project.findByUserId({ user_id });
 
         if(!project){
             const errorMessage =

@@ -18,14 +18,20 @@ projectRouter.post(
         }
 
         console.log(req.body);
+        const user_id = req.currentUserId;
         const title = req.body.title;
         const from_date = req.body.from_date;
         const to_date = req.body.to_date;
+        const description = req.body.description;
+        const git = req.body.git;
 
         const newProject = await projectService.addProject({
+            user_id,
             title,
             from_date,
             to_date,
+            description,
+            git,
         })
 
         if(newProject.errorMessage){
@@ -45,13 +51,43 @@ projectRouter.get(
     login_required, 
     async (req, res, next) => {
         try {
-            const projects = await projectService.getProjects();
+            const projects = await projectService.getProjectList();
             res.status(200).send(projects)
         } catch (error){
             next(error)
         }
     }
 );
+
+// 특정 프로젝트 찾기
+projectRouter.get(
+    "/projects/:id", 
+    login_required, 
+    async (req, res, next) => {
+        try {
+            const project_id = req.params.id;
+            const projects = await projectService.getProjectByProjectID({ project_id });
+            res.status(200).send(projects)
+        } catch (error){
+            next(error)
+        }
+    }
+);
+
+projectRouter.get(
+    "/projectlist/:user_id", 
+    login_required, 
+    async (req, res, next) => {
+        try {
+            const user_id = req.params.user_id;
+            const projects = await projectService.getProjectByUserID({ user_id });
+            res.status(200).send(projects)
+        } catch (error){
+            next(error)
+        }
+    }
+);
+
 
 // 프로젝트 수정-업데이트
 projectRouter.put(
