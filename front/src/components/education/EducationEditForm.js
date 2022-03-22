@@ -1,29 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationAddForm({ setIsAddingEducation, setFinalEditedEducation }) {
+function EducationEditForm({
+  editingEducationList,
+  setEditingEducationList,
+  setFinalEditedEducation,
+  educationId,
+}) {
   //useState로 education의 상태를 설정함.
+  const [education, setEducation] = useState({});
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("재학중");
+
+  useEffect(() => {
+    //"educationlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
+    Api.get("educations", educationId)
+      .then((res) => setEducation(res.data))
+      .catch(() => {
+        console.log("Education 데이터 받아오기에 실패했습니다.");
+      });
+    setSchool(education.school);
+    setMajor(education.major);
+    setPosition(education.position);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     //school이나 major가 공백일 때는 제출할 수 없습니다.
     if (school !== "" && major !== "") {
-      setIsAddingEducation(false);
       const edu = {
         school: school,
         major: major,
         position: position,
       };
-      const res = await Api.post(`education/create`, edu);
-      const education = res.data;
-      setFinalEditedEducation(`${education._id} 추가됨`);
-      return;
+      const res = await Api.put(`educations/:${educationId}`, edu);
+      setFinalEditedEducation(`${educationId} 수정됨`);
+      setEditingEducationList(
+        editingEducationList.filter((id) => id !== educationId)
+      );
     }
     console.log("공백은 제출할 수 없습니다.");
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setEditingEducationList(
+      editingEducationList.filter((id) => id !== educationId)
+    );
+    console.log(`${educationId}가 editingEducationList에서 제거되었습니다.`);
   };
 
   return (
@@ -75,10 +101,7 @@ function EducationAddForm({ setIsAddingEducation, setFinalEditedEducation }) {
             >
               확인
             </Button>
-            <Button
-              variant="secondary"
-              onClick={() => setIsAddingEducation(false)}
-            >
+            <Button variant="secondary" onClick={handleCancel}>
               취소
             </Button>
           </Col>
@@ -88,4 +111,4 @@ function EducationAddForm({ setIsAddingEducation, setFinalEditedEducation }) {
   );
 }
 
-export default EducationAddForm;
+export default EducationEditForm;

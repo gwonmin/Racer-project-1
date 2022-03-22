@@ -33,7 +33,7 @@ function Portfolio() {
     } catch (err) {
       //백엔드와 연결 전에 로딩을 위해 임시 유닛을 개설합니다.
       console.log("포트폴리오 불러오기에 실패하였습니다.\n", err);
-      const ownerData="임시유저의 데이터입니다.";
+      const ownerData = "임시유저의 데이터입니다.";
       setPortfolioOwner(ownerData);
       setIsFetchCompleted(true);
     }
@@ -67,23 +67,17 @@ function Portfolio() {
     <Container fluid>
       <Row>
         <Col md="3" lg="3">
-          <User
+          <User portfolioOwnerId={portfolioOwner.id} isEditable={isEditable} />
+        </Col>
+        <Col>
+          <Education
             portfolioOwnerId={portfolioOwner.id}
             isEditable={isEditable}
           />
-        </Col>
-        <Col>
-          <Education 
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
-          />
-          <Award
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
-          />
+          <Award portfolioOwnerId={portfolioOwner.id} isEditable={isEditable} />
           <Project
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={isEditable}
           />
         </Col>
       </Row>

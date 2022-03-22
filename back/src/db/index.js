@@ -6,7 +6,7 @@ import { Award } from "./models/Award";
 import { Project } from "./models/Project";
 
 const DB_URL =
-  process.env.MONGODB_URL ||
+  process.env.MONGODB_URL || 5001
   "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요.";
 
 mongoose.connect(DB_URL);
