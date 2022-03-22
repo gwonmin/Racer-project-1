@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
@@ -6,25 +6,12 @@ function EducationEditForm({
   editingEducationList,
   setEditingEducationList,
   setFinalEditedEducation,
-  educationId,
+  education,
 }) {
   //useState로 education의 상태를 설정함.
-  const [education, setEducation] = useState({});
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [position, setPosition] = useState("재학중");
-
-  useEffect(() => {
-    //"educationlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
-    Api.get("educations", educationId)
-      .then((res) => setEducation(res.data))
-      .catch(() => {
-        console.log("Education 데이터 받아오기에 실패했습니다.");
-      });
-    setSchool(education.school);
-    setMajor(education.major);
-    setPosition(education.position);
-  }, []);
+  const [school, setSchool] = useState(education.school);
+  const [major, setMajor] = useState(education.major);
+  const [position, setPosition] = useState(education.position);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,11 +22,12 @@ function EducationEditForm({
         major: major,
         position: position,
       };
-      const res = await Api.put(`educations/:${educationId}`, edu);
-      setFinalEditedEducation(`${educationId} 수정됨`);
+      const res = await Api.put(`educations/${education._id}`, edu);
+      setFinalEditedEducation(`${education._id} 수정됨`);
       setEditingEducationList(
-        editingEducationList.filter((id) => id !== educationId)
+        editingEducationList.filter((id) => id !== education._id)
       );
+      return;
     }
     console.log("공백은 제출할 수 없습니다.");
   };
@@ -47,9 +35,9 @@ function EducationEditForm({
   const handleCancel = (e) => {
     e.preventDefault();
     setEditingEducationList(
-      editingEducationList.filter((id) => id !== educationId)
+      editingEducationList.filter((id) => id !== education._id)
     );
-    console.log(`${educationId}가 editingEducationList에서 제거되었습니다.`);
+    console.log(`${education._id}가 editingEducationList에서 제거되었습니다.`);
   };
 
   return (

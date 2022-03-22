@@ -36,7 +36,7 @@ function Education({ portfolioOwnerId, isEditable }) {
                   editingEducationList={editingEducationList}
                   setEditingEducationList={setEditingEducationList}
                   setFinalEditedEducation={setFinalEditedEducation}
-                  educationId={education._id}
+                  education={education}
                 />
               ) : (
                 <EducationElement
@@ -44,7 +44,7 @@ function Education({ portfolioOwnerId, isEditable }) {
                   editingEducationList={editingEducationList}
                   setEditingEducationList={setEditingEducationList}
                   setFinalEditedEducation={setFinalEditedEducation}
-                  educationId={education._id}
+                  education={education}
                 />
               )}
             </div>
