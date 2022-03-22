@@ -1,11 +1,13 @@
 import { Router } from "express";
+//yarn add request 필요!
 
 const naverLoginRouter = Router();
 
-var express = require('express');
-var app = express();
+
 var client_id = '3wO8fO549CGAeAT0mcNu';
 var client_secret = process.env.naverLoginClientSecret;
+
+var code = "";
 var state = "RANDOM_STATE";
 var redirectURI = encodeURI("http://127.0.0.1:5001/callback");
 var api_url = "";
