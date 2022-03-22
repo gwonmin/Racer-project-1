@@ -45,18 +45,6 @@ projectRouter.post(
     }
 });
 
-// projectRouter.get(
-//     "/projects", 
-//     login_required, 
-//     async (req, res, next) => {
-//         try {
-//             const projects = await projectService.getProjectList();
-//             res.status(200).send(projects)
-//         } catch (error){
-//             next(error)
-//         }
-//     }
-// );
 
 // 특정 프로젝트 찾기
 projectRouter.get(
