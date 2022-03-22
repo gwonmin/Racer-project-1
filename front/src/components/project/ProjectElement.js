@@ -1,6 +1,11 @@
 import {Row, Button, Col, Card } from "react-bootstrap";
 
 function ProjectElement({project, isEditable, editingProjectList, setEditingProjectList}) {
+    function handleEdit() {
+        console.log(`${project.user_id}가 EditingAwardList에 추가되었습니다.`)
+        const newList = editingProjectList.concat(project.user_id)
+        setEditingProjectList(newList);
+    }
   return (
     <Card.Text className="mb-3 mr-5">
         <Row className="align-items-center">
@@ -15,11 +20,7 @@ function ProjectElement({project, isEditable, editingProjectList, setEditingProj
                      className="mr-3"
                      variant="outline-info"
                      size="sm"
-                     onClick={() => {
-                         console.log(`${project.user_id}가 EditingAwardList에 추가되었습니다.`)
-                         const newList = editingProjectList.concat(project.user_id)
-                         setEditingProjectList(newList);
-                     }}
+                     onClick={handleEdit}
                  >
                  편집
                  </Button>

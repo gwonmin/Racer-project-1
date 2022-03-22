@@ -12,6 +12,12 @@ function EducationAddForm({ user, education, setIsAddingEducation, educationList
       e.preventDefault();
       //school이나 major가 공백일 때는 제출할 수 없습니다.
       if(school!=="" && major!=="") {
+        //EditingEducationList에서 현재 education을 제거합니다.
+          setEditingEducationList(editingEducationList.filter(id => id !== education.user_id));
+          console.log(`${education.user_id}가 EditingEducationList에서 제거되었습니다.`);
+          //만약 education을 추가하는 중이라면 setIsAddingEducation을 false로 바꿉니다.
+          if(setIsAddingEducation) setIsAddingEducation(false);
+
           // educationList를 변경합니다.
           const tempEducationList = [...educationList];
           const idx = tempEducationList.findIndex(edu => edu.user_id===education.user_id);
@@ -24,29 +30,22 @@ function EducationAddForm({ user, education, setIsAddingEducation, educationList
           if(idx!==-1) {
               console.log(idx)
               tempEducationList[idx] = edu;
-          } else {
-              tempEducationList.push(edu);
+              setEducationList(tempEducationList);
+              return
           }
+          tempEducationList.push(edu);
           setEducationList(tempEducationList);
-
-          //EditingEducationList에서 현재 education을 제거합니다.
-          setEditingEducationList(editingEducationList.filter(id => id !== education.user_id));
-          console.log(`${education.user_id}가 EditingEducationList에서 제거되었습니다.`);
-
-          //만약 education을 추가하는 중이라면 setIsAddingEducation을 false로 바꿉니다.
-          if(setIsAddingEducation) {setIsAddingEducation(false);}
-      } else {
-        console.log("공백은 제출할 수 없습니다.");
+          return
       }
+      console.log("공백은 제출할 수 없습니다.");
   }
 
-  const handleCancle = async (e) => {
+  const handleCancel = (e) => {
       //EditingEducationList에서 현재 education을 제거합니다.
       setEditingEducationList(editingEducationList.filter(id => id !== education.user_id));
       console.log(`${education.user_id}가 editingEducationList에서 제거되었습니다.`);
-
       //만약 education을 추가하는 중이라면 setIsAddingEducation을 false로 바꿉니다.
-      if(setIsAddingEducation) {setIsAddingEducation(false)}
+      if(setIsAddingEducation) setIsAddingEducation(false)
   }
 
   return (
@@ -91,7 +90,7 @@ function EducationAddForm({ user, education, setIsAddingEducation, educationList
               <Button variant="primary" type="submit" className="me-3" onClick={handleSubmit}>
                 확인
               </Button>
-              <Button variant="secondary" onClick={handleCancle}>
+              <Button variant="secondary" onClick={handleCancel}>
                 취소
               </Button>
             </Col>

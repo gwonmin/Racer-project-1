@@ -12,6 +12,12 @@ function AwardAddForm({ user, award, setIsAddingAward, awardList, setAwardList, 
       e.preventDefault();
       //Title이나 Description가 공백일 때는 제출할 수 없습니다.
       if(title!=="" && description!=="") {
+          //EditingAwardList에서 현재 Award을 제거합니다.
+          setEditingAwardList(editingAwardList.filter(id => id !== award.user_id));
+          console.log(`${award.user_id}가 EditingAwardList에서 제거되었습니다.`);
+          //만약 Award을 추가하는 중이라면 setIsAddingAward을 false로 바꿉니다.
+          if(setIsAddingAward) setIsAddingAward(false);
+
           // AwardList를 변경합니다.
           const tempAwardList = [...awardList];
           const idx = tempAwardList.findIndex(awd => awd.user_id===award.user_id);
@@ -23,29 +29,23 @@ function AwardAddForm({ user, award, setIsAddingAward, awardList, setAwardList, 
           if(idx!==-1) {
               console.log(idx)
               tempAwardList[idx] = awd;
-          } else {
-              tempAwardList.push(awd);
+              setAwardList(tempAwardList);
+              return
           }
+          tempAwardList.push(awd);
           setAwardList(tempAwardList);
-
-          //EditingAwardList에서 현재 Award을 제거합니다.
-          setEditingAwardList(editingAwardList.filter(id => id !== award.user_id));
-          console.log(`${award.user_id}가 EditingAwardList에서 제거되었습니다.`);
-
-          //만약 Award을 추가하는 중이라면 setIsAddingAward을 false로 바꿉니다.
-          if(setIsAddingAward) {setIsAddingAward(false);}
-      } else {
-        console.log("공백은 제출할 수 없습니다.");
-      }
+          return 
+      } 
+      console.log("공백은 제출할 수 없습니다.");
   }
 
-  const handleCancle = async (e) => {
+  const handleCancel = (e) => {
       //EditingAwardList에서 현재 Award을 제거합니다.
       setEditingAwardList(editingAwardList.filter(id => id !== award.user_id));
       console.log(`${award.user_id}가 EditingAwardList에서 제거되었습니다.`);
 
       //만약 Award을 추가하는 중이라면 setIsAddingAward을 false로 바꿉니다.
-      if(setIsAddingAward) {setIsAddingAward(false)}
+      if(setIsAddingAward) setIsAddingAward(false)
   }
 
   return (
@@ -54,7 +54,7 @@ function AwardAddForm({ user, award, setIsAddingAward, awardList, setAwardList, 
           <Form.Group controlId="AwardEditTitle" className="mb-3">
             <Form.Control
               type="text"
-              placeholder="학교 이름"
+              placeholder="수상내역"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -62,7 +62,7 @@ function AwardAddForm({ user, award, setIsAddingAward, awardList, setAwardList, 
           <Form.Group controlId="AwardEditDescription" className="mb-3">
             <Form.Control
               type="text"
-              placeholder="전공"
+              placeholder="상세내역"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -72,7 +72,7 @@ function AwardAddForm({ user, award, setIsAddingAward, awardList, setAwardList, 
               <Button variant="primary" type="submit" className="me-3" onClick={handleSubmit}>
                 확인
               </Button>
-              <Button variant="secondary" onClick={handleCancle}>
+              <Button variant="secondary" onClick={handleCancel}>
                 취소
               </Button>
             </Col>

@@ -72,7 +72,7 @@ function Project({ portfolioOwnerId, isEditable }) {
                 <Row className="mt-3">
                     <Col className="text-center mb-3">
                         <Button
-                        variant={!isAddingProject ? ("primary") : ("secondary")}
+                        variant={!isAddingProject ? ("secondary") : ("primary")}
                         disabled = {isAddingProject ? true : false}
                         onClick={() => setIsAddingProject(true)}
                         >

@@ -59,7 +59,7 @@ function LoginForm() {
     }
   };
 
-  const imsyUser = (e) => {
+  const tempUser = (e) => {
     e.preventDefault();
       // 임시유저를 생성하는 함수입니다.
       const user = {
@@ -121,7 +121,7 @@ function LoginForm() {
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
-                <Button variant="success" id="백엔드와 연결 전까지 사용할 임시 유닛입니다." onClick={imsyUser}>
+                <Button variant="success" id="백엔드와 연결 전까지 사용할 임시 유닛입니다." onClick={tempUser}>
                   임시 유저 발급하기
                 </Button>
               </Col>
