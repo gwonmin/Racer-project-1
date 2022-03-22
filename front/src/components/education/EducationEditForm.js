@@ -22,7 +22,7 @@ function EducationEditForm({
         major: major,
         position: position,
       };
-      const res = await Api.put(`educations/${education._id}`, edu);
+      await Api.put(`educations/${education._id}`, edu);
       setFinalEditedEducation(`${education._id} 수정됨`);
       setEditingEducationList(
         editingEducationList.filter((id) => id !== education._id)
