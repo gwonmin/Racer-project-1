@@ -14,13 +14,12 @@ function Award({ portfolioOwnerId, isEditable }) {
     "no award was edited"
   );
   useEffect(() => {
-    //"educationlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
+    //"awardlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
     Api.get("awardlist", portfolioOwnerId)
       .then((res) => setAwardList(res.data))
       .catch(() => {
         console.log("list 데이터 받아오기에 실패했습니다.");
       });
-    console.log(awardList);
     console.log(finalEditedAward);
   }, [portfolioOwnerId, finalEditedAward]);
   return (

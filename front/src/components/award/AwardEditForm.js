@@ -25,10 +25,8 @@ function AwardEditForm({
         whenDate: whenDate,
       };
       await Api.put(`awards/${award._id}`, Awd);
-      await setFinalEditedAward(`${award._id} 수정됨`);
-      await setEditingAwardList(
-        editingAwardList.filter((id) => id !== award._id)
-      );
+      setFinalEditedAward(`${award._id} 수정됨`);
+      setEditingAwardList(editingAwardList.filter((id) => id !== award._id));
       return;
     }
     console.log("공백은 제출할 수 없습니다.");

@@ -19,7 +19,6 @@ function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
         description: description,
         whenDate: whenDate,
       };
-      console.log(Awd);
       const res = await Api.post(`award/create`, Awd);
       const award = res.data;
       setFinalEditedAward(`${award._id} 추가됨`);
@@ -51,7 +50,7 @@ function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
         <Form.Group controlId="ProjectEditToDate" className="mb-3">
           <DatePicker
             selected={whenDate}
-            onChange={(whenDate) => setWhenDate(whenDate)}
+            onChange={(date) => setWhenDate(date)}
           />
         </Form.Group>
         <Form.Group as={Row} className="mt-3 text-center">

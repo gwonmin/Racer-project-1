@@ -56,24 +56,9 @@ function LoginForm() {
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      alert("로그인에 실패하였습니다.\n", err);
     }
   };
-
-  const tempUser = (e) => {
-    e.preventDefault();
-      // 임시유저를 생성하는 함수입니다.
-      const user = {
-        email: "저는 임시유저입니다.",
-        password: "임시 비밀번호",
-      }
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
-
-      // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
-  }
 
   return (
     <Container>
@@ -117,16 +102,6 @@ function LoginForm() {
                 </Button>
               </Col>
             </Form.Group>
-
-
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="success" id="백엔드와 연결 전까지 사용할 임시 유닛입니다." onClick={tempUser}>
-                  임시 유저 발급하기
-                </Button>
-              </Col>
-            </Form.Group>
-            
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
