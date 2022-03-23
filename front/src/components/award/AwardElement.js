@@ -11,7 +11,6 @@ function AwardElement({
   function handleEdit() {
     const newList = editingAwardList.concat(award._id);
     setEditingAwardList(newList);
-    console.log(`${award._id}가 EditingEducationList에 추가되었습니다.`);
   }
   function handleDelete() {
     Api.delete("awards", award._id);
