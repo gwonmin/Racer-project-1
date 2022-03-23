@@ -4,11 +4,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as Api from "../../api";
 
-function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
+function AwardEditForm({
+  award,
+  editingAwardList,
+  setEditingAwardList,
+  setFinalEditedAward,
+}) {
   //useState로 Award의 상태를 설정함.
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [whenDate, setWhenDate] = useState(new Date());
+  const [title, setTitle] = useState(award.title);
+  const [description, setDescription] = useState(award.description);
+  const [whenDate, setWhenDate] = useState(new Date(award.whenDate));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,14 +24,20 @@ function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
         description: description,
         whenDate: whenDate,
       };
-      console.log(Awd);
-      const res = await Api.post(`award/create`, Awd);
-      const award = res.data;
-      setFinalEditedAward(`${award._id} 추가됨`);
-      setIsAddingAward(false);
+      await Api.put(`awards/${award._id}`, Awd);
+      await setFinalEditedAward(`${award._id} 수정됨`);
+      await setEditingAwardList(
+        editingAwardList.filter((id) => id !== award._id)
+      );
       return;
     }
     console.log("공백은 제출할 수 없습니다.");
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    //EditingAwardList에서 현재 Award을 제거합니다.
+    setEditingAwardList(editingAwardList.filter((id) => id !== award._id));
   };
 
   return (
@@ -64,7 +75,7 @@ function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
             >
               확인
             </Button>
-            <Button variant="secondary" onClick={() => setIsAddingAward(false)}>
+            <Button variant="secondary" onClick={handleCancel}>
               취소
             </Button>
           </Col>
@@ -74,4 +85,4 @@ function AwardAddForm({ setIsAddingAward, setFinalEditedAward }) {
   );
 }
 
-export default AwardAddForm;
+export default AwardEditForm;

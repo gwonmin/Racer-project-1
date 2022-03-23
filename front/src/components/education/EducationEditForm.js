@@ -37,7 +37,6 @@ function EducationEditForm({
     setEditingEducationList(
       editingEducationList.filter((id) => id !== education._id)
     );
-    console.log(`${education._id}가 editingEducationList에서 제거되었습니다.`);
   };
 
   return (

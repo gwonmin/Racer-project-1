@@ -4,7 +4,7 @@ import * as Api from "../../api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function ProjectAddForm({
+function ProjectEditForm({
   user,
   project,
   setIsAddingProject,
@@ -135,4 +135,4 @@ function ProjectAddForm({
   );
 }
 
-export default ProjectAddForm;
+export default ProjectEditForm;
