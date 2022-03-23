@@ -2,6 +2,11 @@
 
 ## 실행 방법
 
+## 0. Google Login API
+```
+npm install google-auth-library --save
+```
+
 ## 1. Mongodb 서버 구축 (a, b 중 선택)
 
 ### a. 로컬 서버
