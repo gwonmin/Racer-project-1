@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const googleUserAuthRouter = Router();
 
 // 쿠키 정보
+// googleUserAuthRouter.set('view engine', 'ejs');
 googleUserAuthRouter.use(cookieParser());
 // googleUserAuthRouter.use(express.json());
 // googleUserAuthRouter.use(express.static('public'));
@@ -13,15 +14,16 @@ googleUserAuthRouter.use(cookieParser());
 // 구글 로그인 화면
 googleUserAuthRouter.get('/googlelogin', (req,res)=>{
     // views 파일의 login.ejs
+    // res.render('login');
     res.sendFile(__dirname + '/GoogleLogin_old.html');
 })
 
-// 구글 토큰 세션에 저장하기
+// 구글 토큰을 쿠키에 저장하기
 googleUserAuthRouter.post("/googlelogin", (req, res)=>{
     let token = req.body.token;
     googleVerify()
     .then(()=>{
-        res.cookie('session-token', token);
+        res.cookie('google-id-token', token);
         res.send('success');  
     })
     .catch(console.error);

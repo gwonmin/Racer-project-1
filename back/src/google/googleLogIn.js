@@ -9,6 +9,7 @@ const googleVerify = async () => {
 
         });
         const payload = ticket.getPayload();
+        console.log(payload)
         const userid = payload['sub'];
 
     } catch(error) {
