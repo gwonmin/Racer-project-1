@@ -10,14 +10,14 @@ var client_secret = process.env.naverLoginClientSecret;
 
 var code = "";
 var state = "RANDOM_STATE";
-var redirectURI = encodeURI("http://127.0.0.1:5001/callback");
-var api_url = "";
 
+var api_url = "";
 var token = "";
 var refreshToken = "";
 
 //네이버 로그인 api
 naverLoginRouter.get("/naverlogin", function (req, res) {
+  var redirectURI = encodeURI("http://127.0.0.1:5001/auth/naver/callback");
   api_url =
     "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
     client_id +
@@ -34,7 +34,8 @@ naverLoginRouter.get("/naverlogin", function (req, res) {
 });
 
 //로그인 토큰정보를 주는 api
-naverLoginRouter.get("/callback", function (req, res) {
+naverLoginRouter.get("/auth/naver/callback", function (req, res) {
+  var redirectURI = encodeURI("http://127.0.0.1:5001/profile/naver/member");
   code = req.query.code;
   state = req.query.state;
   api_url =
@@ -74,7 +75,7 @@ naverLoginRouter.get("/callback", function (req, res) {
 
 let naverProfile = {};
 //회원 프로필 조회 api
-naverLoginRouter.get("/member", function (req, res) {
+naverLoginRouter.get("/profile/naver/member", function (req, res) {
   var api_url = "https://openapi.naver.com/v1/nid/me";
   var request = require("request");
   //header 업데이트
@@ -85,7 +86,6 @@ naverLoginRouter.get("/member", function (req, res) {
   };
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      
       // body는 객체타입이 아니라 String이기 때문에 사용하기 쉽도록 객체타입으로 형변환
       let objectBody = JSON.parse(body);
       naverProfile = objectBody;
@@ -101,7 +101,7 @@ naverLoginRouter.get("/member", function (req, res) {
 });
 
 //네이버 프로필 api 활용해 회원가입 연동하기
-naverLoginRouter.post("/naver/user/register", function (req, res, next) {
+naverLoginRouter.post("/register/naver/user", async function (req, res, next) {
   try {
     //네이버 프로필 api로부터 얻은 데이터
     const name = naverProfile.response.name;
@@ -110,17 +110,18 @@ naverLoginRouter.post("/naver/user/register", function (req, res, next) {
     const password = req.body.password;
 
     // 위 데이터를 유저 db에 추가하기
-    const newUser = userAuthService.addUser({
+    const newUser = await userAuthService.addUser({
       name,
       email,
       password,
     });
 
+    console.log(newUser);
     if (newUser.errorMessage) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).send(newUser);
+    res.json(newUser);
   } catch (error) {
     next(error);
   }
