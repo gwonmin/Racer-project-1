@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
@@ -13,6 +13,12 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
+  const [NIL, setNIL] = useState("");
+  useEffect(() => {
+    Api.get("naverLogin").then((res) => {
+      setNIL(res.data);
+    });
+  }, []);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -59,22 +65,6 @@ function LoginForm() {
     }
   };
 
-  const tempUser = (e) => {
-    e.preventDefault();
-      // 임시유저를 생성하는 함수입니다.
-      const user = {
-        email: "저는 임시유저입니다.",
-        password: "임시 비밀번호",
-      }
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
-
-      // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
-  }
-
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -118,15 +108,14 @@ function LoginForm() {
               </Col>
             </Form.Group>
 
-
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
-                <Button variant="success" id="백엔드와 연결 전까지 사용할 임시 유닛입니다." onClick={tempUser}>
-                  임시 유저 발급하기
+                <Button variant="success" id="naverIdLogin">
+                  네이버 로그인
                 </Button>
+                <div dangerouslySetInnerHTML={{ __html: NIL }}></div>
               </Col>
             </Form.Group>
-            
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
