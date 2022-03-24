@@ -89,7 +89,7 @@ naverLoginRouter.get("/profile/naver/member", function (req, res) {
       // body는 객체타입이 아니라 String이기 때문에 사용하기 쉽도록 객체타입으로 형변환
       let objectBody = JSON.parse(body);
       naverProfile = objectBody;
-      res.status(200).send(objectBody.response)
+      res.status(200).send(objectBody.response);
     } else {
       console.log("error");
       if (response != null) {
@@ -127,5 +127,4 @@ naverLoginRouter.post("/register/naver/user", async function (req, res, next) {
   }
 });
 
-
-export { naverLoginRouter }
+export { naverLoginRouter };
