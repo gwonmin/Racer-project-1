@@ -1,3 +1,6 @@
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
+
 const checkAuthenticated= (req, res, next) =>{
     let token = req.cookies['session-token'];
 

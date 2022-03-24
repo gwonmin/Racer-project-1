@@ -7,13 +7,13 @@ const googleUserAuthRouter = Router();
 
 // 쿠키 정보
 googleUserAuthRouter.use(cookieParser());
-googleUserAuthRouter.use(express.json());
-googleUserAuthRouter.use(express.static('public'));
+// googleUserAuthRouter.use(express.json());
+// googleUserAuthRouter.use(express.static('public'));
 
 // 구글 로그인 화면
 googleUserAuthRouter.get('/googlelogin', (req,res)=>{
     // views 파일의 login.ejs
-    res.render('login');
+    res.sendFile(__dirname + '/GoogleLogin_old.html');
 })
 
 // 구글 토큰 세션에 저장하기
@@ -41,7 +41,7 @@ googleUserAuthRouter.get('/protectedRoute', checkAuthenticated, (req,res)=>{
 // 구글 로그아웃
 googleUserAuthRouter.get('/googleLogout', (req, res)=>{
     res.clearCookie('session-token');
-    res.redirect('/login');
+    res.sendFile(__dirname + 'GoogleLogin_old.html');
 })
 
 export { googleUserAuthRouter };
