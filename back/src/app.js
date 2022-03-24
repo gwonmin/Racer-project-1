@@ -6,7 +6,7 @@ import { educationRouter } from "./routers/educationRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { projectRouter } from "./routers/projectRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
-import { googleUserAuthRouter } from "./google/googleLoginRouter";
+
 
 const app = express();
 
@@ -30,9 +30,40 @@ app.use(certificateRouter);
 app.use(educationRouter);
 app.use(awardRouter);
 app.use(projectRouter);
-app.use(googleUserAuthRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
+
+
+// passport 설치하기
+// $ npm install passport-google-oauth20
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport = require("passport");
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://www.example.com/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+
+// Authenticate Requests
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.send(req);
+});
+
 
 export { app };
