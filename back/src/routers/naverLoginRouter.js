@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { userAuthService } from "../services/userService";
+
 //yarn add request 필요!
 
 const naverLoginRouter = Router();
@@ -13,7 +15,6 @@ var api_url = "";
 
 var token = "";
 var refreshToken = "";
-var header = "Bearer " + token; // Bearer 다음에 공백 추가
 
 //네이버 로그인 api
 naverLoginRouter.get('/naverlogin', function (req, res) {
@@ -49,21 +50,23 @@ naverLoginRouter.get('/callback', function (req, res) {
     });
   });
 
+let naverProfile = {};
 //회원 프로필 조회 api
 naverLoginRouter.get('/member', function (req, res) {
   var api_url = 'https://openapi.naver.com/v1/nid/me';
   var request = require('request');
   //header 업데이트
-  var header = "Bearer " + token; 
+  var header = "Bearer " + token; // Bearer 다음에 공백 추가
   var options = {
       url: api_url,
       headers: {'Authorization': header}
     };
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
+      
       // body는 객체타입이 아니라 String이기 때문에 사용하기 쉽도록 객체타입으로 형변환
       let objectBody = JSON.parse(body);
-
+      naverProfile = objectBody;
       res.status(200).send(objectBody.response)
     } else {
       console.log('error');
@@ -74,5 +77,32 @@ naverLoginRouter.get('/member', function (req, res) {
     }
   });
 });
+
+//네이버 프로필 api 활용해 회원가입 연동하기
+naverLoginRouter.post("/naver/user/register", function (req, res, next) {
+  try {
+    //네이버 프로필 api로부터 얻은 데이터
+    const name = naverProfile.response.name;
+    const email = naverProfile.response.email;
+    // req (request) 에서 데이터 가져오기
+    const password = req.body.password;
+
+    // 위 데이터를 유저 db에 추가하기
+    const newUser = userAuthService.addUser({
+      name,
+      email,
+      password,
+    });
+
+    if (newUser.errorMessage) {
+      throw new Error(newUser.errorMessage);
+    }
+
+    res.status(201).send(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export { naverLoginRouter }
