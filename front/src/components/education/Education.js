@@ -2,10 +2,15 @@
 import React, { useState, useEffect } from "react";
 import EducationAddForm from "./EducationAddForm";
 import EducationElement from "./EducationElement";
+<<<<<<< HEAD
+=======
+import EducationEditForm from "./EducationEditForm";
+>>>>>>> front-backend-connectiong-real
 import * as Api from "../../api";
 import { Card, Row, Button, Col } from "react-bootstrap";
 
 function Education({ portfolioOwnerId, isEditable }) {
+<<<<<<< HEAD
   const [educationList, setEducationList] = useState([{
     user_id: 1,
     school: "엘리스대학교",
@@ -96,6 +101,73 @@ function Education({ portfolioOwnerId, isEditable }) {
         </Col>
         </Card.Body>
         </Card>
+=======
+  const [educationList, setEducationList] = useState([]);
+  const [editingEducationList, setEditingEducationList] = useState([]);
+  const [isAddingEducation, setIsAddingEducation] = useState(false);
+  const [finalEditedEducation, setFinalEditedEducation] = useState(
+    "no education was edited"
+  );
+
+  useEffect(() => {
+    //"educationlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
+    Api.get("educationlist", portfolioOwnerId)
+      .then((res) => setEducationList(res.data))
+      .catch(() => {
+        console.log("list 데이터 받아오기에 실패했습니다.");
+      });
+    console.log(finalEditedEducation);
+  }, [portfolioOwnerId, finalEditedEducation]);
+
+  return (
+    <>
+      <Card className="mb-2 mr-5">
+        <Card.Body>
+          <Card.Title>학력</Card.Title>
+          {educationList.map((education) => (
+            <div key={education._id}>
+              {editingEducationList.includes(education._id) ? (
+                <EducationEditForm
+                  editingEducationList={editingEducationList}
+                  setEditingEducationList={setEditingEducationList}
+                  setFinalEditedEducation={setFinalEditedEducation}
+                  education={education}
+                />
+              ) : (
+                <EducationElement
+                  isEditable={isEditable}
+                  editingEducationList={editingEducationList}
+                  setEditingEducationList={setEditingEducationList}
+                  setFinalEditedEducation={setFinalEditedEducation}
+                  education={education}
+                />
+              )}
+            </div>
+          ))}
+          <Col>
+            {isEditable && (
+              <Row className="mt-3">
+                <Col className="text-center mb-3">
+                  <Button
+                    variant={isAddingEducation ? "secondary" : "primary"}
+                    disabled={isAddingEducation ? true : false}
+                    onClick={() => setIsAddingEducation(true)}
+                  >
+                    +
+                  </Button>
+                </Col>
+                {isAddingEducation && (
+                  <EducationAddForm
+                    setIsAddingEducation={setIsAddingEducation}
+                    setFinalEditedEducation={setFinalEditedEducation}
+                  />
+                )}
+              </Row>
+            )}
+          </Col>
+        </Card.Body>
+      </Card>
+>>>>>>> front-backend-connectiong-real
     </>
   );
 }

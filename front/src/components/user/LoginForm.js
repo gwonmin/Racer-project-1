@@ -56,6 +56,7 @@ function LoginForm() {
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      alert("로그인에 실패하였습니다.\n", err);
     }
   };
 
