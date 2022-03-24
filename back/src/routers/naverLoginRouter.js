@@ -11,8 +11,8 @@ var state = "RANDOM_STATE";
 var redirectURI = encodeURI("http://127.0.0.1:5001/callback");
 var api_url = "";
 
-var token = process.env.naverLoginToken;
-var refreshToken = process.env.naverLoginRefreshToken;
+var token = "";
+var refreshToken = "";
 var header = "Bearer " + token; // Bearer 다음에 공백 추가
 
 //네이버 로그인 api
@@ -35,14 +35,12 @@ naverLoginRouter.get('/callback', function (req, res) {
      };
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        // res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
         // body는 객체타입이 아니라 String이기 때문에 사용하기 쉽도록 객체타입으로 형변환
 
         let objectBody = JSON.parse(body);
         token = objectBody.access_token;
         refreshToken = objectBody.refresh_token;
 
-        // res.end(body);
         res.status(200).send(objectBody)
       } else {
         res.status(response.statusCode).end();
@@ -55,18 +53,17 @@ naverLoginRouter.get('/callback', function (req, res) {
 naverLoginRouter.get('/member', function (req, res) {
   var api_url = 'https://openapi.naver.com/v1/nid/me';
   var request = require('request');
+  //header 업데이트
+  var header = "Bearer " + token; 
   var options = {
       url: api_url,
       headers: {'Authorization': header}
     };
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
-
       // body는 객체타입이 아니라 String이기 때문에 사용하기 쉽도록 객체타입으로 형변환
       let objectBody = JSON.parse(body);
 
-      // res.end(body);
       res.status(200).send(objectBody.response)
     } else {
       console.log('error');
