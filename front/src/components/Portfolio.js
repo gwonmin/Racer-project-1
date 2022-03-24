@@ -5,20 +5,10 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Education from "./education/Education"
-=======
 import Education from "./education/Education";
 import Award from "./award/Award";
 import Project from "./project/Project";
 import Certification from "./certification/Certification";
->>>>>>> 991076fb6cb65634316e728003904fb572f691db
-=======
-import Education from "./education/Education";
-import Award from "./award/Award";
-import Project from "./project/Project";
->>>>>>> front-backend-connectiong-real
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -44,11 +34,7 @@ function Portfolio() {
     } catch (err) {
       //백엔드와 연결 전에 로딩을 위해 임시 유닛을 개설합니다.
       console.log("포트폴리오 불러오기에 실패하였습니다.\n", err);
-<<<<<<< HEAD
-      const ownerData="임시유저의 데이터입니다.";
-=======
       const ownerData = "임시유저의 데이터입니다.";
->>>>>>> front-backend-connectiong-real
       setPortfolioOwner(ownerData);
       setIsFetchCompleted(true);
     }
@@ -82,35 +68,6 @@ function Portfolio() {
     <Container fluid>
       <Row>
         <Col md="3" lg="3">
-<<<<<<< HEAD
-          <User
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={isEditable}
-          />
-        </Col>
-        <Col>
-          <Education 
-<<<<<<< HEAD
-               portfolioOwnerId={portfolioOwner.id}
-               isEditable={portfolioOwner.id === userState.user?.id}
-=======
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
-          />
-          <Award
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
-          />
-          <Project
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={isEditable}
-          />
-          
-          <Certification
-          portfolioOwnerId={portfolioOwner.id}
-          isEditable={isEditable}
->>>>>>> 991076fb6cb65634316e728003904fb572f691db
-=======
           <User portfolioOwnerId={portfolioOwner.id} isEditable={isEditable} />
         </Col>
         <Col>
@@ -122,7 +79,10 @@ function Portfolio() {
           <Project
             portfolioOwnerId={portfolioOwner.id}
             isEditable={isEditable}
->>>>>>> front-backend-connectiong-real
+          />
+          <Certification
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={isEditable}
           />
         </Col>
       </Row>

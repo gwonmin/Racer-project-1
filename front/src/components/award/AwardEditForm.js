@@ -22,7 +22,9 @@ function AwardEditForm({
       const Awd = {
         title: title,
         description: description,
-        whenDate: whenDate,
+        whenDate: `${whenDate.getFullYear()}-${
+          whenDate.getMonth() + 1
+        }-${whenDate.getDate()}`,
       };
       await Api.put(`awards/${award._id}`, Awd);
       setFinalEditedAward(`${award._id} 수정됨`);
