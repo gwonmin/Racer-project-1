@@ -17,7 +17,6 @@ projectRouter.post(
             );
         }
 
-        console.log(req.body);
         const user_id = req.currentUserId;
         const title = req.body.title;
         const from_date = req.body.from_date;
