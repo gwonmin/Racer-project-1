@@ -67,7 +67,7 @@ function Award({ portfolioOwnerId, isEditable }) {
                 <Row className="mt-3">
                     <Col className="text-center mb-3">
                         <Button
-                        variant={!isAddingAward ? ("primary") : ("secondary")}
+                        variant={isAddingAward ? ("secondary") : ("primary")}
                         disabled = {isAddingAward ? true : false}
                         onClick={() => setIsAddingAward(true)}
                         >

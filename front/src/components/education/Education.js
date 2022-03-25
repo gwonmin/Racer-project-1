@@ -69,7 +69,7 @@ function Education({ portfolioOwnerId, isEditable }) {
                 <Row className="mt-3">
                     <Col className="text-center mb-3">
                         <Button
-                        variant={!isAddingEducation ? ("primary") : ("secondary")}
+                        variant={isAddingEducation ? ("secondary") : ("primary")}
                         disabled = {isAddingEducation ? true : false}
                         onClick={() => setIsAddingEducation(true)}
                         >

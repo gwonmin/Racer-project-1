@@ -16,6 +16,12 @@ function ProjectAddForm({ user, project, setIsAddingProject, projectList, setPro
       e.preventDefault();
       //Title이나 Description가 공백일 때는 제출할 수 없습니다.
       if(title!=="" && description!=="") {
+          //EditingProjectList에서 현재 Project을 제거합니다.
+          setEditingProjectList(editingProjectList.filter(id => id !== project.user_id));
+          console.log(`${project.user_id}가 EditingProjectList에서 제거되었습니다.`);
+          //만약 Project을 추가하는 중이라면 setIsAddingProject을 false로 바꿉니다.
+          if(setIsAddingProject) setIsAddingProject(false);
+
           // ProjectList를 변경합니다.
           const tempProjectList = [...projectList];
           const idx = tempProjectList.findIndex(awd => awd.user_id===project.user_id);
@@ -29,29 +35,23 @@ function ProjectAddForm({ user, project, setIsAddingProject, projectList, setPro
           if(idx!==-1) {
               console.log(idx)
               tempProjectList[idx] = prj;
-          } else {
-              tempProjectList.push(prj);
+              setProjectList(tempProjectList);
+              return
           }
+          tempProjectList.push(prj);
           setProjectList(tempProjectList);
-
-          //EditingProjectList에서 현재 Project을 제거합니다.
-          setEditingProjectList(editingProjectList.filter(id => id !== project.user_id));
-          console.log(`${project.user_id}가 EditingProjectList에서 제거되었습니다.`);
-
-          //만약 Project을 추가하는 중이라면 setIsAddingProject을 false로 바꿉니다.
-          if(setIsAddingProject) {setIsAddingProject(false);}
-      } else {
-        console.log("공백은 제출할 수 없습니다.");
-      }
+          return
+      } 
+      console.log("공백은 제출할 수 없습니다.");
   }
 
-  const handleCancle = async (e) => {
+  const handleCancel = (e) => {
       //EditingProjectList에서 현재 Project을 제거합니다.
       setEditingProjectList(editingProjectList.filter(id => id !== project.user_id));
       console.log(`${project.user_id}가 EditingProjectList에서 제거되었습니다.`);
 
       //만약 Project을 추가하는 중이라면 setIsAddingProject을 false로 바꿉니다.
-      if(setIsAddingProject) {setIsAddingProject(false)}
+      if(setIsAddingProject) setIsAddingProject(false)
   }
 
   return (
@@ -96,7 +96,7 @@ function ProjectAddForm({ user, project, setIsAddingProject, projectList, setPro
               <Button variant="primary" type="submit" className="me-3" onClick={handleSubmit}>
                 확인
               </Button>
-              <Button variant="secondary" onClick={handleCancle}>
+              <Button variant="secondary" onClick={handleCancel}>
                 취소
               </Button>
             </Col>

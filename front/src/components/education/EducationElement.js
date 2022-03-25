@@ -1,6 +1,11 @@
 import {Row, Button, Col, Card } from "react-bootstrap";
 
 function EducationElement({education, isEditable, editingEducationList, setEditingEducationList}) {
+    function handleEdit() {
+        console.log(`${education.user_id}가 EditingAwardList에 추가되었습니다.`)
+        const newList = editingEducationList.concat(education.user_id)
+        setEditingEducationList(newList);
+    }
   return (
     <Card.Text className="mb-3 mr-5">
         <Row className="align-items-center">
@@ -14,11 +19,7 @@ function EducationElement({education, isEditable, editingEducationList, setEditi
                      className="mr-3"
                      variant="outline-info"
                      size="sm"
-                     onClick={() => {
-                         console.log(`${education.user_id}가 EditingAwardList에 추가되었습니다.`)
-                         const newList = editingEducationList.concat(education.user_id)
-                         setEditingEducationList(newList);
-                     }}
+                     onClick={handleEdit}
                  >
                  편집
                  </Button>
