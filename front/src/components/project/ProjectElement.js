@@ -25,8 +25,11 @@ function ProjectElement({
           <Col>{project?.title}</Col>
           <Col className="text-muted">{project?.description}</Col>
           <Col className="text-muted">
-            {project?.from_date.slice(0, 10)} ~ {project?.to_date.slice(0, 10)}
+            {project?.from_date} ~ {project?.to_date}
           </Col>
+          {project.git !== "" && (
+            <Col className="text-muted">{project?.git}</Col>
+          )}
         </Col>
         {isEditable && (
           <Col xs lg="1">
