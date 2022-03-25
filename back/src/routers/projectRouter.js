@@ -84,19 +84,19 @@ projectRouter.put(
     async (req, res, next) => {
       try {
         // URI로부터 사용자 id를 추출함.
-        const user_id = req.params.user_id;
+        const project_id = req.params._id;
 
         // body data 로부터 업데이트할 프로젝트 정보를 추출함.
         const title = req.body.title ?? null;
         const from_date = req.body.from_date ?? null;
-        const to_date = req.body.pto_date?? null;
+        const to_date = req.body.to_date?? null;
         const description = req.body.description ?? null;
         const git = req.body.git ?? null;
 
         const toUpdate = { title, from_date, to_date, description, git };
   
         // 해당 사용자 아이디로 프로젝트 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-        const updatedProject = await projectService.setProject({ user_id, toUpdate });
+        const updatedProject = await projectService.setProject({ project_id, toUpdate });
   
         if (updatedProject.errorMessage) {
           throw new Error(updatedProject.errorMessage);
