@@ -1,66 +1,84 @@
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Row, Button, Col, Badge } from "react-bootstrap";
-import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, languageList }) {
   const navigate = useNavigate();
-  const [languageList, setLanguageList] = useState([]);
-  const [badge, setBadge] = useState({});
 
-  useEffect(() => {
-    //"languagelist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
-    Api.get("languagelist", user.id)
-      .then((res) => setLanguageList(res.data))
-      .catch(() => {
-        console.log("list 데이터 받아오기에 실패했습니다.");
-      });
-  }, [user]);
-
-  // [
-  //   "C",
-  //   "Java",
-  //   "C++",
-  //   "C#",
-  //   "Visual Basic",
-  //   "Javascript",
-  //   "Assembly",
-  //   "SQL",
-  //   "Swift",
-  //   "기타",
-  // ];
-  const LanguageBadge = (language) => {
-    switch (language.name) {
+  const LanguageBadge = (props) => {
+    switch (props.name) {
       case "Python":
-        setBadge({
-          src: "/Icons/python_18894.png",
-          name: "파이썬",
-          bg: "warning",
-          text: "dark",
-        });
-        break;
+        return (
+          <Badge className="m-1" bg="success">
+            <img width="auto" height="20" alt="뱃지" src="/Icons/python.png" />
+            파이썬
+          </Badge>
+        );
       case "C":
-        setBadge({
-          src: "/Icons/pngegg.png",
-          name: "C 언어",
-          bg: "warning",
-          text: "dark",
-        });
-        break;
-
+        return (
+          <Badge className="m-1" bg="primary">
+            <img width="auto" height="20" alt="뱃지" src="/Icons/C_lang.png" />C
+            언어
+          </Badge>
+        );
+      case "Java":
+        return (
+          <Badge className="m-1" bg="light" text="dark">
+            <img width="auto" height="20" alt="뱃지" src="/Icons/java.png" />
+            자바
+          </Badge>
+        );
+      case "C++":
+        return (
+          <Badge className="m-1" bg="info">
+            <img
+              width="auto"
+              height="20"
+              alt="뱃지"
+              src="/Icons/C_plusplus.png"
+            />
+            C++
+          </Badge>
+        );
+      case "C#":
+        return (
+          <Badge className="m-1" bg="dark">
+            <img width="auto" height="20" alt="뱃지" src="/Icons/C_sharp.png" />
+            C#
+          </Badge>
+        );
+      case "Visual Basic":
+        return (
+          <Badge className="m-1" bg="light" text="dark">
+            <img
+              width="auto"
+              height="20"
+              alt="뱃지"
+              src="/Icons/visual_basic.png"
+            />
+            Visual Basic
+          </Badge>
+        );
+      case "Javascript":
+        return (
+          <Badge className="m-1" bg="warning" text="dark">
+            <img
+              width="auto"
+              height="20"
+              alt="뱃지"
+              src="/Icons/javascript.png"
+            />
+            Javascript
+          </Badge>
+        );
       default:
+        return (
+          <Badge className="m-1" bg="secondary">
+            <img width="20" height="auto" alt="뱃지" src="/Icons/guitar.png" />
+            기타
+          </Badge>
+        );
     }
-    return (
-      <Badge bg="success" text="dark" margin="10">
-        <img
-          width="20"
-          height="auto"
-          alt={"파이썬뱃지"}
-          src="/Icons/python_18894.png"
-        />
-        파이썬
-      </Badge>
-    );
   };
 
   return (
@@ -78,13 +96,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text>{user?.description}</Card.Text>
-        <Row xs="auto" className="jusify-content-center">
-          {languageList.map((language) => (
-            <div>
-              <LanguageBadge />
-            </div>
-          ))}
-        </Row>
+        <Row xs="auto" className="jusify-content-center"></Row>
+        {languageList.map((lgg) => (
+          <LanguageBadge name={lgg?.name} />
+        ))}
         {isEditable && (
           <Col>
             <Row className="mt-3 text-center text-info">
