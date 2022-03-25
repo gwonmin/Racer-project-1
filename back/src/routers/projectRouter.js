@@ -89,7 +89,7 @@ projectRouter.put(
         // body data 로부터 업데이트할 프로젝트 정보를 추출함.
         const title = req.body.title ?? null;
         const from_date = req.body.from_date ?? null;
-        const to_date = req.body.pto_date?? null;
+        const to_date = req.body.to_date?? null;
         const description = req.body.description ?? null;
         const git = req.body.git ?? null;
 
