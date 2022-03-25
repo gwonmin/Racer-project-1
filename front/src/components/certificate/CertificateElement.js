@@ -1,37 +1,32 @@
 import { Row, Button, Col, Card } from "react-bootstrap";
 import * as Api from "../../api";
 
-function ProjectElement({
-  project,
+function CertificateElement({
+  certificate,
   isEditable,
-  editingProjectList,
-  setEditingProjectList,
-  setFinalEditedProject,
+  editingCertificateList,
+  setEditingCertificateList,
+  setFinalEditedCertificate,
 }) {
   function handleEdit() {
-    const newList = editingProjectList.concat(project._id);
-    setEditingProjectList(newList);
-    console.log(`${project._id}가 EditingProjectList에 추가되었습니다.`);
+    const newList = editingCertificateList.concat(certificate._id);
+    setEditingCertificateList(newList);
+    console.log(
+      `${certificate._id}가 EditingCertificateList에 추가되었습니다.`
+    );
   }
 
   function handleDelete() {
-    Api.delete("projects", project._id);
-    setFinalEditedProject(`${project._id} 삭제됨`);
+    Api.delete("certificates", certificate._id);
+    setFinalEditedCertificate(`${certificate._id} 삭제됨`);
   }
   return (
     <Card.Text className="mb-3 mr-5">
       <Row className="align-items-center">
         <Col>
-          <Col>{project?.title}</Col>
-          <Col className="text-muted">{project?.description}</Col>
-          <Col className="text-muted">
-            {project?.from_date} ~ {project?.to_date}
-          </Col>
-          {project.git !== "" && (
-            <Col className="text-muted">
-              <a href={project?.git}>{project?.git}</a>
-            </Col>
-          )}
+          <Col>{certificate?.title}</Col>
+          <Col className="text-muted">{certificate?.description}</Col>
+          <Col className="text-muted">{certificate?.when_date}</Col>
         </Col>
         {isEditable && (
           <Col xs lg="1">
@@ -58,4 +53,4 @@ function ProjectElement({
   );
 }
 
-export default ProjectElement;
+export default CertificateElement;

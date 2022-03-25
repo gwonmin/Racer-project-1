@@ -11,7 +11,7 @@ function Project({ portfolioOwnerId, isEditable }) {
   const [editingProjectList, setEditingProjectList] = useState([]);
   const [isAddingProject, setIsAddingProject] = useState(false);
   const [finalEditedProject, setFinalEditedProject] = useState(
-    "no award was edited"
+    "no project was edited"
   );
   useEffect(() => {
     //"projectlist/:user_id" 엔드포인트로 GET 요청을 하고, response의 data로 세팅해야 하는 부분입니다.
