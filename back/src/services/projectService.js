@@ -24,14 +24,9 @@ class projectService{
         return projects;
     }
 
-    // static getProjectList = async() => {
-    //     const projects = await Project.findAll();
-    //     return projects;
-    // }
-
     // 프로젝트 수정하기
-    static setProject = async ({ user_id, toUpdate }) => {
-        let project = await Project.findByUserId({ user_id });
+    static setProject = async ({ project_id, toUpdate }) => {
+        let project = await Project.findByUserId({ project_id });
 
         if(!project){
             const errorMessage =
@@ -42,31 +37,31 @@ class projectService{
         if(toUpdate.title){
             const fieldToUpdate = "title";
             const newValue = toUpdate.title;
-            project = await Project.update({ user_id, fieldToUpdate, newValue })
+            project = await Project.update({ project_id, fieldToUpdate, newValue })
         }
 
         if(toUpdate.from_date){
             const fieldToUpdate = "from_date";
             const newValue = toUpdate.from_date;
-            project = await Project.update({ user_id, fieldToUpdate, newValue })
+            project = await Project.update({ project_id, fieldToUpdate, newValue })
         }
 
         if(toUpdate.to_date){
             const fieldToUpdate = "to_date";
             const newValue = toUpdate.to_date;
-            project = await Project.update({ user_id, fieldToUpdate, newValue })
+            project = await Project.update({ project_id, fieldToUpdate, newValue })
         }
 
         if (toUpdate.description) {
             const fieldToUpdate = "description";
             const newValue = toUpdate.description;
-            project = await Project.update({ user_id, fieldToUpdate, newValue });
+            project = await Project.update({ project_id, fieldToUpdate, newValue });
         }
 
         if (toUpdate.git) {
             const fieldToUpdate = "git";
             const newValue = toUpdate.git;
-            project = await project.update({ user_id, fieldToUpdate, newValue });
+            project = await project.update({ project_id, fieldToUpdate, newValue });
         }
 
         return project;
