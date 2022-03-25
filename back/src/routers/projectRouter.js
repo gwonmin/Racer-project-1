@@ -96,7 +96,7 @@ projectRouter.put(
         const toUpdate = { title, from_date, to_date, description, git };
   
         // 해당 사용자 아이디로 프로젝트 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-        const updatedProject = await projectService.setProject({ user_id, toUpdate });
+        const updatedProject = await projectService.setProject({ project_id, toUpdate });
   
         if (updatedProject.errorMessage) {
           throw new Error(updatedProject.errorMessage);
