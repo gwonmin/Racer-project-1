@@ -5,6 +5,7 @@ import { educationService } from "../services/educationService";
 
 const educationRouter = Router();
 
+//새로운 학력 만들기
 educationRouter.post(
   "/education/create",
   login_required,
@@ -42,6 +43,8 @@ educationRouter.post(
   }
 );
 
+
+//특정 학력 찾기
 educationRouter.get(
   "/educations/:id",
   login_required,
@@ -57,6 +60,8 @@ educationRouter.get(
   }
 );
 
+
+//특정 학력 수정하기
 educationRouter.put(
   "/educations/:id",
   login_required,
@@ -104,6 +109,7 @@ educationRouter.delete(
   }
 );
 
+//전체 학력 불러오기
 educationRouter.get(
   "/educationlist/:user_id",
   login_required,

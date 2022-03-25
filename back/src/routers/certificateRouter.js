@@ -5,6 +5,7 @@ import { certificateService } from "../services/certificateService";
 
 const certificateRouter = Router();
 
+//새로운 자격증 만들기
 certificateRouter.post(
   "/certificate/create",
   login_required,
@@ -42,6 +43,7 @@ certificateRouter.post(
   }
 );
 
+//특정 자격증 찾기
 certificateRouter.get(
   "/certificates/:id",
   login_required,
@@ -57,6 +59,7 @@ certificateRouter.get(
   }
 );
 
+//특정 자격증 수정하기
 certificateRouter.put(
   "/certificates/:id",
   login_required,
@@ -104,6 +107,7 @@ certificateRouter.delete(
   }
 );
 
+//전체 수상이력 불러오기
 certificateRouter.get(
   "/certificatelist/:user_id",
   login_required,
