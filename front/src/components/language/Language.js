@@ -29,6 +29,7 @@ function Language({ portfolioOwnerId, isEditable }) {
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>사용 언어</Card.Title>
+          <hr></hr>
           {languageList.map((language) => (
             <div key={language._id}>
               {editingLanguageList.includes(language._id) ? (
@@ -47,6 +48,7 @@ function Language({ portfolioOwnerId, isEditable }) {
                   language={language}
                 />
               )}
+              <hr></hr>
             </div>
           ))}
           <Col>

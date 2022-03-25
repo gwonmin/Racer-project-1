@@ -27,6 +27,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>자격증</Card.Title>
+          <hr></hr>
           {certificateList.map((certificate) => (
             <div key={certificate._id}>
               {editingCertificateList.includes(certificate._id) ? (
@@ -45,6 +46,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
                   setFinalEditedCertificate={setFinalEditedCertificate}
                 />
               )}
+              <hr></hr>
             </div>
           ))}
           <Col>

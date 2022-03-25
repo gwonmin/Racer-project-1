@@ -17,12 +17,17 @@ function LanguageElement({
     Api.delete("languages", language._id);
     setFinalEditedLanguage(`${language._id} 삭제됨`);
   }
+  const regExp = "^[0-9]+$";
+
   return (
     <Card.Text className="mb-3 mr-5">
       <Row className="align-items-center">
         <Col>
           <Col>
-            {language?.name}: Lv.{language?.level}
+            {language?.name}:
+            {language?.level.match(regExp)
+              ? " Lv." + language?.level
+              : " " + language?.level}
           </Col>
         </Col>
         {isEditable && (

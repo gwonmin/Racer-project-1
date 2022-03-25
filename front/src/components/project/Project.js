@@ -27,6 +27,7 @@ function Project({ portfolioOwnerId, isEditable }) {
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>프로젝트</Card.Title>
+          <hr></hr>
           {projectList.map((project) => (
             <div key={project._id}>
               {editingProjectList.includes(project._id) ? (
@@ -45,6 +46,7 @@ function Project({ portfolioOwnerId, isEditable }) {
                   setFinalEditedProject={setFinalEditedProject}
                 />
               )}
+              <hr></hr>
             </div>
           ))}
           <Col>
