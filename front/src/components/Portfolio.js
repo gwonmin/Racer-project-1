@@ -9,6 +9,7 @@ import Education from "./education/Education";
 import Award from "./award/Award";
 import Project from "./project/Project";
 import Certificate from "./certificate/Certificate";
+import Language from "./language/Language";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -81,6 +82,10 @@ function Portfolio() {
             isEditable={isEditable}
           />
           <Certificate
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={isEditable}
+          />
+          <Language
             portfolioOwnerId={portfolioOwner.id}
             isEditable={isEditable}
           />
