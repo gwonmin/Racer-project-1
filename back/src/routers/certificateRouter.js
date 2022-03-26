@@ -68,11 +68,11 @@ certificateRouter.put(
       // URI로부터 id를 추출함.
       const _id = req.params.id;
       // body data 로부터 업데이트할 학력 정보를 추출함.
-      const name = req.body.name ?? null;
+      const title = req.body.title ?? null;
       const description = req.body.description ?? null;
       const when_date = req.body.when_date ?? null;
 
-      const toUpdate = { name, description, when_date };
+      const toUpdate = { title, description, when_date };
 
       //해당 id로 학력 정보를 db에서 찾아 업데이트함. 업데이트가 없을 시 생략
       const updatedCertificate = await certificateService.setCertificate({
