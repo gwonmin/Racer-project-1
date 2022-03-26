@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import { Button, Form, Card, Col, Row, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -13,6 +13,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [description, setDescription] = useState(user.description);
   const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +71,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className="mt-3 mb-3 text-center">
             <Col sm={{ span: 20 }}>
               <Button
                 variant="primary"
@@ -87,10 +88,26 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               >
                 취소
               </Button>
-              <Button variant="danger" onClick={handleDelete}>
+              <Button variant="danger" onClick={() => setShow(!show)}>
                 회원탈퇴
               </Button>
             </Col>
+            <>
+              <Alert show={show} variant="danger" className="mt-3">
+                <Alert.Heading>경고</Alert.Heading>
+                <p>확인 버튼을 누르시면 회원님의 정보가 영구히 삭제됩니다.</p>
+                <hr />
+                <div className="d-flex justify-content-center">
+                  <Button
+                    size="sm"
+                    onClick={() => setShow(false)}
+                    variant="outline-danger"
+                  >
+                    확인
+                  </Button>
+                </div>
+              </Alert>
+            </>
           </Form.Group>
         </Form>
       </Card.Body>

@@ -112,8 +112,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
           </Card.Subtitle>
           <Card.Text>{user?.description}</Card.Text>
           <Row xs="auto" className="justify-content-center"></Row>
+          <hr></hr>
           {languageList.map((lgg) => (
-            <LanguageBadge name={lgg?.name} />
+            <LanguageBadge key={lgg?.id} name={lgg?.name} />
           ))}
           <hr></hr>
         </Col>
