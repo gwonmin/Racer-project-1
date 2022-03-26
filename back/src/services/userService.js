@@ -125,8 +125,8 @@ class userAuthService {
     return user;
   }
 
-  static deleteUser = async ({ _id }) => {
-    const user = await User.delete({ _id });
+  static deleteUser = async ({ id }) => {
+    const user = await User.delete({ id });
     return user;
   };
 }

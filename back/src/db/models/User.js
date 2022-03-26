@@ -34,8 +34,8 @@ class User {
     return updatedUser;
   }
 
-  static delete = async ({ _id }) => {
-    const result = await UserModel.remove({ _id });
+  static delete = async ({ id }) => {
+    const result = await UserModel.remove({ id });
     return result;
   };
 }
