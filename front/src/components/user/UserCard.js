@@ -9,8 +9,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
 
   useEffect(() => {
     if (!user) return;
-    console.log(user);
-    console.log(user.id);
     Api.get("languagelist", user.id)
       .then((res) => setLanguageList(res.data))
       .catch(() => {
@@ -105,8 +103,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
               alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
             />
           </Col>
-          <hr></hr>
         </Row>
+        <hr></hr>
         <Col>
           <Card.Title>{user?.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
