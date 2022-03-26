@@ -93,7 +93,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
       <Card.Body>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center text-center">
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
@@ -108,13 +108,13 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
             {user?.email}
           </Card.Subtitle>
           <Card.Text>{user?.description}</Card.Text>
-          <Row xs="auto" className="jusify-content-center"></Row>
+          <Row xs="auto" className="justify-content-center"></Row>
           {languageList.map((lgg) => (
             <LanguageBadge name={lgg?.name} />
           ))}
           <hr></hr>
         </Col>
-        <Col height="100%" className="align-text-bottom">
+        <Col height="100%" className="justify-content-bottom">
           {isEditable && (
             <Col>
               <Row className="mt-3 text-center text-info">

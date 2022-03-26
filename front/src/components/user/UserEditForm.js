@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
@@ -9,6 +10,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +29,11 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     // isEditing을 false로 세팅함.
     setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    Api.delete("users", user.id);
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -61,11 +69,23 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3" onClick={handleSubmit}>
+              <Button
+                variant="primary"
+                type="submit"
+                className="me-3"
+                onClick={handleSubmit}
+              >
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button
+                variant="secondary"
+                className="me-3"
+                onClick={() => setIsEditing(false)}
+              >
                 취소
+              </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                회원탈퇴
               </Button>
             </Col>
           </Form.Group>
