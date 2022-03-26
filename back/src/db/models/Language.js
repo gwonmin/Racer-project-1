@@ -1,4 +1,4 @@
-import { LanguageModel } from "../schemas/Language";
+import { LanguageModel } from "../schemas/language";
 
 class Language {
   static create = async ({ newLanguage }) => {
