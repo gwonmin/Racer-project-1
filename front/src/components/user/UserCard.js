@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Card, Row, Button, Col, Badge } from "react-bootstrap";
+import { Card, Row, Button, Col, Badge, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
@@ -118,10 +118,12 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
           ))}
           <hr></hr>
         </Col>
-        <Col height="100%" className="justify-content-bottom">
+      </Card.Body>
+      <Card.Footer>
+        <Col className="justify-content-bottom">
           {isEditable && (
             <Col>
-              <Row className="mt-3 text-center text-info">
+              <Row className="text-center text-info">
                 <Col sm={{ span: 20 }}>
                   <Button
                     variant="outline-info"
@@ -136,17 +138,14 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
           )}
 
           {isNetwork && (
-            <Col className="mt-3 text-center text-info align-text-bottom">
-              <Button
-                className="mt-3"
-                onClick={() => navigate(`/users/${user.id}`)}
-              >
+            <Col className="text-center text-info align-text-bottom">
+              <Button onClick={() => navigate(`/users/${user.id}`)}>
                 포트폴리오
               </Button>
             </Col>
           )}
         </Col>
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }
