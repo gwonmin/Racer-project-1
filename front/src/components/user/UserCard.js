@@ -137,13 +137,12 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
 
           {isNetwork && (
             <Col className="mt-3 text-center text-info align-text-bottom">
-              <Card.Link
+              <Button
                 className="mt-3"
-                href="#"
                 onClick={() => navigate(`/users/${user.id}`)}
               >
                 포트폴리오
-              </Card.Link>
+              </Button>
             </Col>
           )}
         </Col>
