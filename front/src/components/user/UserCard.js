@@ -8,12 +8,13 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
   const [languageList, setLanguageList] = useState([]);
 
   useEffect(() => {
-    Api.get("languagelist", id)
+    if (!user) return;
+    Api.get("languagelist", user.id)
       .then((res) => setLanguageList(res.data))
       .catch(() => {
         console.log("기술 데이터 받아오기에 실패했습니다.");
       });
-  }, [id]);
+  }, [user.id, user]);
   const LanguageBadge = (props) => {
     switch (props.name) {
       case "Python":
@@ -92,29 +93,32 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
 
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
-      <Card.Body>
-        <Row className="justify-content-md-center">
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
-          />
-          <hr></hr>
+      <Card.Body className="text-center">
+        <Row className="mt-3 text-center text-info">
+          <Col>
+            <Card.Img
+              style={{ width: "8rem", height: "8rem" }}
+              className="mb-3"
+              src="http://placekitten.com/200/200"
+              alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            />
+          </Col>
         </Row>
+        <hr></hr>
         <Col>
           <Card.Title>{user?.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {user?.email}
           </Card.Subtitle>
           <Card.Text>{user?.description}</Card.Text>
-          <Row xs="auto" className="jusify-content-center"></Row>
+          <Row xs="auto" className="justify-content-center"></Row>
+          <hr></hr>
           {languageList.map((lgg) => (
-            <LanguageBadge name={lgg?.name} />
+            <LanguageBadge key={lgg?.id} name={lgg?.name} />
           ))}
           <hr></hr>
         </Col>
-        <Col height="100%" className="align-text-bottom">
+        <Col height="100%" className="justify-content-bottom">
           {isEditable && (
             <Col>
               <Row className="mt-3 text-center text-info">

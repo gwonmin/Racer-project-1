@@ -22,7 +22,7 @@ function LanguageEditForm({
     }
     async function LGGPut(Lgg) {
       await Api.put(`languages/${language._id}`, Lgg);
-      setFinalEditedLanguage(`${language._id} 추가됨`);
+      setFinalEditedLanguage(`${language._id} 수정됨`);
       setEditingLanguageList(
         editingLanguageList.filter((id) => id !== language._id)
       );
