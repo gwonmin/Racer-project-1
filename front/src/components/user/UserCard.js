@@ -1,10 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Row, Button, Col, Badge } from "react-bootstrap";
+import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, languageList }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
   const navigate = useNavigate();
+  const [languageList, setLanguageList] = useState([]);
 
+  useEffect(() => {
+    Api.get("languagelist", id)
+      .then((res) => setLanguageList(res.data))
+      .catch(() => {
+        console.log("기술 데이터 받아오기에 실패했습니다.");
+      });
+  }, [id]);
   const LanguageBadge = (props) => {
     switch (props.name) {
       case "Python":
@@ -93,38 +102,47 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, languageList }) {
           />
           <hr></hr>
         </Row>
-        <Card.Title>{user?.name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-        <Card.Text>{user?.description}</Card.Text>
-        <Row xs="auto" className="jusify-content-center"></Row>
-        {languageList.map((lgg) => (
-          <LanguageBadge name={lgg?.name} />
-        ))}
-        {isEditable && (
-          <Col>
-            <Row className="mt-3 text-center text-info">
-              <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
-                  onClick={() => setIsEditing(true)}
-                >
-                  편집
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        )}
+        <Col>
+          <Card.Title>{user?.name}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {user?.email}
+          </Card.Subtitle>
+          <Card.Text>{user?.description}</Card.Text>
+          <Row xs="auto" className="jusify-content-center"></Row>
+          {languageList.map((lgg) => (
+            <LanguageBadge name={lgg?.name} />
+          ))}
+          <hr></hr>
+        </Col>
+        <Col height="100%" className="align-text-bottom">
+          {isEditable && (
+            <Col>
+              <Row className="mt-3 text-center text-info">
+                <Col sm={{ span: 20 }}>
+                  <Button
+                    variant="outline-info"
+                    size="sm"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    편집
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          )}
 
-        {isNetwork && (
-          <Card.Link
-            className="mt-3"
-            href="#"
-            onClick={() => navigate(`/users/${user.id}`)}
-          >
-            포트폴리오
-          </Card.Link>
-        )}
+          {isNetwork && (
+            <Col className="mt-3 text-center text-info align-text-bottom">
+              <Card.Link
+                className="mt-3"
+                href="#"
+                onClick={() => navigate(`/users/${user.id}`)}
+              >
+                포트폴리오
+              </Card.Link>
+            </Col>
+          )}
+        </Col>
       </Card.Body>
     </Card>
   );

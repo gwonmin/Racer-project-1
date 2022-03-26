@@ -22,16 +22,16 @@ function Language({ portfolioOwnerId, isEditable }) {
         console.log("list 데이터 받아오기에 실패했습니다.");
       });
     console.log(finalEditedLanguage);
-  }, [portfolioOwnerId, finalEditedLanguage]);
+  }, [finalEditedLanguage]);
 
   return (
     <>
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>사용 언어</Card.Title>
-          <hr></hr>
           {languageList.map((language) => (
             <div key={language._id}>
+              <hr></hr>
               {editingLanguageList.includes(language._id) ? (
                 <LanguageEditForm
                   editingLanguageList={editingLanguageList}

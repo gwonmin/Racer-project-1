@@ -28,11 +28,10 @@ function Education({ portfolioOwnerId, isEditable }) {
     <>
       <Card className="mb-2 mr-5">
         <Card.Body>
-          <Card.Title>
-            학력<hr></hr>
-          </Card.Title>
+          <Card.Title>학력</Card.Title>
           {educationList.map((education) => (
             <div key={education._id}>
+              <hr></hr>
               {editingEducationList.includes(education._id) ? (
                 <EducationEditForm
                   editingEducationList={editingEducationList}

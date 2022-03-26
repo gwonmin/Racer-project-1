@@ -29,7 +29,9 @@ function ProjectElement({
           </Col>
           {project.git !== "" && (
             <Col className="text-muted">
-              <a href={project?.git}>{project?.git}</a>
+              <a href={project?.git} target="_blank" rel="noreferrer">
+                {project?.git}
+              </a>
             </Col>
           )}
         </Col>

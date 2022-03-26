@@ -1,12 +1,6 @@
 import { Language } from "../db";
 class languageService {
   static addLanguage = async ({ user_id, name, level }) => {
-    const LGG = await Language.findByName({ name });
-    if (LGG) {
-      const errorMessage = "이 언어가 이미 목록에 있습니다.";
-      return { errorMessage };
-    }
-
     const newLanguage = { user_id, name, level };
 
     const createdNewLanguage = await Language.create({ newLanguage });

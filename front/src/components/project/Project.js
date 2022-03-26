@@ -27,9 +27,9 @@ function Project({ portfolioOwnerId, isEditable }) {
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>프로젝트</Card.Title>
-          <hr></hr>
           {projectList.map((project) => (
             <div key={project._id}>
+              <hr></hr>
               {editingProjectList.includes(project._id) ? (
                 <ProjectEditForm
                   project={project}

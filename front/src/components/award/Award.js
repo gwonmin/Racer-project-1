@@ -27,9 +27,9 @@ function Award({ portfolioOwnerId, isEditable }) {
       <Card className="mb-2 mr-5">
         <Card.Body>
           <Card.Title>수상이력</Card.Title>
-          <hr></hr>
           {awardList.map((award) => (
             <div key={award._id}>
+              <hr></hr>
               {editingAwardList.includes(award._id) ? (
                 <AwardEditForm
                   award={award}

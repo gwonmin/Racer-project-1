@@ -22,28 +22,11 @@ function Network() {
     Api.get("userlist").then((res) => setUsers(res.data));
   }, [userState, navigate]);
 
-  const GetLanguages = (portfolioOwnerId) => {
-    const [languageList, setLanguageList] = useState([]);
-    useEffect(() => {
-      Api.get("languagelist", portfolioOwnerId)
-        .then((res) => setLanguageList(res.data))
-        .catch(() => {
-          console.log("유저 데이터 받아오기에 실패했습니다.");
-        });
-    }, []);
-    return languageList;
-  };
-
   return (
     <Container fluid>
       <Row xs="auto" className="jusify-content-center">
         {users.map((user) => (
-          <UserCard
-            key={user.id}
-            user={user}
-            languageList={GetLanguages(user.id)}
-            isNetwork
-          />
+          <UserCard key={user.id} user={user} id={user.id} isNetwork />
         ))}
       </Row>
     </Container>
