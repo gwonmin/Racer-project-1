@@ -56,9 +56,10 @@ function LoginForm() {
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      alert("로그인에 실패하였습니다.\n", err);
     }
   };
-
+  
   return (
     <Container>
       <Row className="justify-content-md-center mt-5">
@@ -101,7 +102,6 @@ function LoginForm() {
                 </Button>
               </Col>
             </Form.Group>
-
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="light" onClick={() => navigate("/register")}>
