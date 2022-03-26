@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Button, Form, Card, Col, Row, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
+import { DispatchContext } from "../../App";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
@@ -9,6 +11,9 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+  const dispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +31,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     // isEditing을 false로 세팅함.
     setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    Api.delete("users", user.id);
+    sessionStorage.removeItem("userToken");
+    dispatch({ type: "LOGOUT" });
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -59,15 +71,43 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className="mt-3 mb-3 text-center">
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3" onClick={handleSubmit}>
+              <Button
+                variant="primary"
+                type="submit"
+                className="me-3"
+                onClick={handleSubmit}
+              >
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button
+                variant="secondary"
+                className="me-3"
+                onClick={() => setIsEditing(false)}
+              >
                 취소
               </Button>
+              <Button variant="danger" onClick={() => setShow(!show)}>
+                회원탈퇴
+              </Button>
             </Col>
+            <>
+              <Alert show={show} variant="danger" className="mt-3">
+                <Alert.Heading>경고</Alert.Heading>
+                <p>확인 버튼을 누르시면 회원님의 정보가 영구히 삭제됩니다.</p>
+                <hr />
+                <div className="d-flex justify-content-center">
+                  <Button
+                    size="sm"
+                    onClick={() => handleDelete}
+                    variant="outline-danger"
+                  >
+                    확인
+                  </Button>
+                </div>
+              </Alert>
+            </>
           </Form.Group>
         </Form>
       </Card.Body>

@@ -147,4 +147,19 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+userAuthRouter.delete("/users/:id", login_required, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedUser = await userAuthService.deleteUser({ id });
+
+    if (deletedUser.errorMessage) {
+      throw new Error(updatedUser.errorMessage);
+    }
+
+    res.status(200).json(deletedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { userAuthRouter };
