@@ -100,7 +100,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 <div className="d-flex justify-content-center">
                   <Button
                     size="sm"
-                    onClick={() => handleDelete}
+                    onClick={handleDelete}
                     variant="outline-danger"
                   >
                     확인
