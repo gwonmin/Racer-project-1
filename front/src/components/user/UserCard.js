@@ -122,8 +122,14 @@ function UserCard({
               <Card.Img
                 style={{ width: "8rem", height: "8rem" }}
                 className="mb-3"
-                src="http://placekitten.com/200/200"
-                alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+                src={
+                  user.poke === ""
+                    ? "http://placekitten.com/200/200"
+                    : "http://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                      user.poke +
+                      ".png"
+                }
+                alt="프로필 사진"
               />
             </Col>
           </Row>

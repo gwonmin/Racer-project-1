@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Form, Card, Col, Row, Alert } from "react-bootstrap";
+import { Button, Form, Card, Col, Row, Alert, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -11,6 +11,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+  const [poke, setPoke] = useState(user.poke);
   const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -23,6 +24,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       name,
       email,
       description,
+      poke,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
@@ -40,11 +42,52 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     navigate("/login", { replace: true });
   };
 
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+  }
+
   return (
     <Card className="mb-2">
       <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="mt-3 text-center">
+          <Card.Img
+            style={{ width: "8rem", height: "8rem" }}
+            className="mb-3"
+            src={
+              poke === 0
+                ? "http://placekitten.com/200/200"
+                : "http://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                  poke +
+                  ".png"
+            }
+            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+          />
+          <Col className="mb-2">
+            <Badge bg="primary">프로필 선택</Badge>
+          </Col>
+          <Col className="md-3">
+            <Button
+              variant="outline-primary"
+              className="me-2"
+              onClick={() => setPoke(0)}
+            >
+              고양이
+            </Button>
+            <Button
+              variant="outline-primary"
+              className="ms-2"
+              onClick={() => {
+                setPoke(getRandomInt(1, 151));
+                this.forceUpdate();
+              }}
+            >
+              포켓몬
+            </Button>
+          </Col>
           <Form.Group controlId="useEditName" className="mb-3">
+            <hr></hr>
             <Form.Control
               type="text"
               placeholder="이름"
@@ -105,6 +148,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                   >
                     확인
                   </Button>
+                  <hr></hr>
                 </div>
               </Alert>
             </>
