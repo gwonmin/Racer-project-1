@@ -1,11 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Card, Row, Button, Col, Badge } from "react-bootstrap";
+import { Card, Row, Button, Col, Badge, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
+function UserCard({
+  user,
+  setIsEditing,
+  isEditable,
+  isNetwork,
+  filterName,
+  isFiltering,
+}) {
   const navigate = useNavigate();
   const [languageList, setLanguageList] = useState([]);
+  const [isInFilter, setIsInFilter] = useState(true);
 
   useEffect(() => {
     if (!user) return;
@@ -15,6 +23,18 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
         console.log("기술 데이터 받아오기에 실패했습니다.");
       });
   }, [user.id, user]);
+
+  useEffect(() => {
+    let count = 0;
+    if (!languageList) return;
+    languageList.forEach((element) => {
+      if (element.name !== filterName) {
+        count++;
+      }
+    });
+    count === languageList.length ? setIsInFilter(true) : setIsInFilter(false);
+  }, [languageList, filterName]);
+
   const LanguageBadge = (props) => {
     switch (props.name) {
       case "Python":
@@ -91,64 +111,65 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, id }) {
     }
   };
 
-  return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
-      <Card.Body className="text-center">
-        <Row className="mt-3 text-center text-info">
-          <Col>
-            <Card.Img
-              style={{ width: "8rem", height: "8rem" }}
-              className="mb-3"
-              src="http://placekitten.com/200/200"
-              alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
-            />
-          </Col>
-        </Row>
-        <hr></hr>
-        <Col>
-          <Card.Title>{user?.name}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
-            {user?.email}
-          </Card.Subtitle>
-          <Card.Text>{user?.description}</Card.Text>
-          <Row xs="auto" className="justify-content-center"></Row>
-          <hr></hr>
-          {languageList.map((lgg) => (
-            <LanguageBadge key={lgg?.id} name={lgg?.name} />
-          ))}
-          <hr></hr>
-        </Col>
-        <Col height="100%" className="justify-content-bottom">
-          {isEditable && (
+  if (isNetwork && isFiltering && isInFilter) {
+    return <div></div>;
+  } else {
+    return (
+      <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+        <Card.Body className="text-center">
+          <Row className="mt-3 text-center text-info">
             <Col>
-              <Row className="mt-3 text-center text-info">
-                <Col sm={{ span: 20 }}>
-                  <Button
-                    variant="outline-info"
-                    size="sm"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    편집
-                  </Button>
-                </Col>
-              </Row>
+              <Card.Img
+                style={{ width: "8rem", height: "8rem" }}
+                className="mb-3"
+                src="http://placekitten.com/200/200"
+                alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+              />
             </Col>
-          )}
-
-          {isNetwork && (
-            <Col className="mt-3 text-center text-info align-text-bottom">
-              <Button
-                className="mt-3"
-                onClick={() => navigate(`/users/${user.id}`)}
-              >
-                포트폴리오
-              </Button>
-            </Col>
-          )}
-        </Col>
-      </Card.Body>
-    </Card>
-  );
+          </Row>
+          <hr></hr>
+          <Col>
+            <Card.Title>{user?.name}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {user?.email}
+            </Card.Subtitle>
+            <Card.Text>{user?.description}</Card.Text>
+            <Row xs="auto" className="justify-content-center"></Row>
+            <hr></hr>
+            {languageList.map((lgg) => (
+              <LanguageBadge key={lgg?.id} name={lgg?.name} />
+            ))}
+            <hr></hr>
+          </Col>
+        </Card.Body>
+        <Card.Footer>
+          <Col className="justify-content-bottom">
+            {isEditable && (
+              <Col>
+                <Row className="text-center text-info">
+                  <Col sm={{ span: 20 }}>
+                    <Button
+                      variant="outline-info"
+                      size="sm"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      편집
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            )}
+            {isNetwork && (
+              <Col className="text-center text-info align-text-bottom">
+                <Button onClick={() => navigate(`/users/${user.id}`)}>
+                  포트폴리오
+                </Button>
+              </Col>
+            )}
+          </Col>
+        </Card.Footer>
+      </Card>
+    );
+  }
 }
-
 export default UserCard;

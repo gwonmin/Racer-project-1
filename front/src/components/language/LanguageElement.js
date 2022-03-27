@@ -24,10 +24,10 @@ function LanguageElement({
       <Row className="align-items-center">
         <Col>
           <Col>
-            {language?.name}:
+            {language?.name + ": "}
             {language?.level.match(regExp)
-              ? " Lv." + language?.level
-              : " " + language?.level}
+              ? "Lv." + language?.level
+              : language?.level}
           </Col>
         </Col>
         {isEditable && (
