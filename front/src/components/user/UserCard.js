@@ -17,7 +17,7 @@ function UserCard({
 
   useEffect(() => {
     if (!user) return;
-    Api.get("languagelist", user.id)
+    Api.get("languageList", user.id)
       .then((res) => setLanguageList(res.data))
       .catch(() => {
         console.log("기술 데이터 받아오기에 실패했습니다.");
