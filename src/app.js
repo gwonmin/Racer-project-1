@@ -35,4 +35,10 @@ app.use(languageRouter);
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
+import path from "path"
+app.use(express.static(path.join(__dirname, "../front", "build")))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../front", "build", "index.html"));
+});
+
 export { app };
